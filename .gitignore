@@ -33,3 +33,5 @@ build/
 *.app
 Snake
 snake
+init.sh
+.vscode

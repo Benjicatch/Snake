@@ -6,20 +6,17 @@
 */
 
 #include "raylib.h"
+#include "Display.hpp"
 
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    Snake::Display display;
 
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        EndDrawing();
+    try {
+        display.display();
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
     }
-
-    CloseWindow();
-
     return 0;
 }

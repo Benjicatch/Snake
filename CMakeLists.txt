@@ -31,4 +31,4 @@ set(INCROOT
     ${CMAKE_SOURCE_DIR}/includes/core/
 )
 target_include_directories(snake PUBLIC ${INCROOT})
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE src)
