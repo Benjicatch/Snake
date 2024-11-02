@@ -6,16 +6,21 @@
 */
 #include "Map.hpp"
 
-Map::Map(int x, int y) : _x(x), _y(y)
+Snake::Map::Map(int x, int y) : _size_map(x, y)
 {
 }
 
-Map::~Map()
+Snake::Map::~Map()
 {
 }
 
-void Map::resize(int x, int y)
+void Snake::Map::resize(int x, int y)
 {
-    _x = x;
-    _y = y;
+    _size_map.first = x;
+    _size_map.second = y;
+}
+
+std::pair<int, int> Snake::Map::getSizeMap()
+{
+    return _size_map;
 }

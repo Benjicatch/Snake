@@ -26,6 +26,7 @@ namespace Snake {
             void displayMenu();
             void displaySettings();
             void displayBackground();
+            void displayGrass(Rectangle destRect);
 
             void setScreenWidth(float screen_width);
             void setScreenHeight(float screen_height);
@@ -36,5 +37,7 @@ namespace Snake {
             float _screen_height;
             Snake::Map _map;
             Texture2D _backg;
+            Texture2D _grass;
+            Rectangle _window_map;
     };
 }

@@ -5,14 +5,19 @@
 ** Map
 */
 
-class Map
-{
-    public:
-        Map(int x, int y);
-        ~Map();
-        void resize(int x, int y);
+#include <iostream>
 
-    private:
-        int _x;
-        int _y;
-};
+namespace Snake {
+    class Map
+    {
+        public:
+            Map(int x, int y);
+            ~Map();
+            void resize(int x, int y);
+            std::pair<int, int> getSizeMap();
+
+        private:
+            std::pair<int, int> _size_map;
+            std::pair<int, int> _apple_position;
+    };
+}
