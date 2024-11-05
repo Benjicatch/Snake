@@ -14,8 +14,12 @@ namespace Snake {
     {
         public:
             ~ACase();
+            void setPosition(std::pair<int, int> position);
+            const std::pair<int, int> getPosition() const;
+            void displayObject(Rectangle destRect);
             void display(Rectangle _window_map, std::pair<int, int> sizeMap);
-        private:
+        protected:
             std::pair<int, int> _position;
+            Texture2D _object;
     };
 }

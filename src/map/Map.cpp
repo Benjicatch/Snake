@@ -67,7 +67,7 @@ void Snake::Map::setApplePosition()
     int index = rand() % free_slots.size();
 
     if (_map[_apple->getPosition().first][_apple->getPosition().second] != Snake::TypeCase::APPLE) {
-        _apple->setApplePosition(free_slots[index]);
+        _apple->setPosition(free_slots[index]);
         _map[free_slots[index].first][free_slots[index].second] = Snake::TypeCase::APPLE;
     }
 }

@@ -15,12 +15,5 @@ namespace Snake {
         Apple();
         ~Apple();
         Apple &operator=(const Apple &apple);
-        void displayApple(Rectangle destRect);
-        void display(Rectangle _window_map, std::pair<int, int> sizeMap) override;
-        void setApplePosition(std::pair<int, int> position);
-        const std::pair<int, int> getPosition() const;
-    private:
-        Texture2D _apple;
-        std::pair<int, int> _position;
     };
 }
