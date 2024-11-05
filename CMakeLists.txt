@@ -32,3 +32,5 @@ set(INCROOT
 )
 target_include_directories(snake PUBLIC ${INCROOT})
 target_link_libraries(${PROJECT_NAME} PRIVATE src)
+target_link_libraries(${PROJECT_NAME} PRIVATE map)
+target_link_libraries(${PROJECT_NAME} PRIVATE display)

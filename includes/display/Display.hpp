@@ -5,8 +5,10 @@
 ** Player
 */
 
+#pragma once
 #include <iostream>
 #include "Map.hpp"
+#include "Apple.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -35,7 +37,7 @@ namespace Snake {
         private:
             float _screen_width;
             float _screen_height;
-            Snake::Map _map;
+            std::shared_ptr<Map> _map;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;

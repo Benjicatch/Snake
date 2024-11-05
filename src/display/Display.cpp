@@ -7,9 +7,10 @@
 
 #include "Display.hpp"
 
-Snake::Display::Display() : _map(20, 10), _screen_width(800), _screen_height(450)
+Snake::Display::Display() : _screen_width(800), _screen_height(450)
 {
     InitWindow(_screen_width, _screen_height, "Snake");
+    _map = std::make_shared<Map>(10, 5);
     SetTargetFPS(60);
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
@@ -62,23 +63,29 @@ void Snake::Display::displayBackground()
 
 void Snake::Display::displayMap()
 {
-    float square_width = _window_map.width / _map.getSizeMap().first;
-    float square_height = _window_map.height / _map.getSizeMap().second;
+    float square_width = _window_map.width / _map->getSizeMap().first;
+    float square_height = _window_map.height / _map->getSizeMap().second;
 
-    for (int i = 0; i < _map.getSizeMap().first; i++) {
-        for (int j = 0; j < _map.getSizeMap().second; j++) {
-            displayGrass({_window_map.x + i * square_width,
-                          _window_map.y + j * square_height,
-                          square_width,
-                          square_height});
+    for (int i = 0; i < _map->getSizeMap().first; i++) {
+        for (int j = 0; j < _map->getSizeMap().second; j++) {
+            displayGrass({ _window_map.x + i * square_width,
+                           _window_map.y + j * square_height,
+                           square_width,
+                           square_height });
+            // DrawRectangleLines(_window_map.x + i * square_width, _window_map.y + j * square_height, square_width, square_height, BLACK);
         }
     }
 }
 
+void Snake::Display::displayApple()
+{
+    _map->setApplePosition();
+    _map->getApple()->display(_window_map, _map->getSizeMap());
+}
+
 void Snake::Display::display()
 {
-    while (!WindowShouldClose())
-    {
+    while (!WindowShouldClose()) {
         setScreenHeight(GetScreenHeight());
         setScreenWidth(GetScreenWidth());
         BeginDrawing();
@@ -86,6 +93,7 @@ void Snake::Display::display()
         displayBackground();
         _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
         displayMap();
+        displayApple();
         EndDrawing();
     }
 }
