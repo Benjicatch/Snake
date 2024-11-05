@@ -12,6 +12,13 @@
 
 namespace Snake {
 
+    enum class CaseType {
+        EMPTY,
+        APPLE,
+        SNAKE_BODY,
+        SNAKE_HEAD
+    };
+
     class ICase
     {
         public:
@@ -20,5 +27,6 @@ namespace Snake {
             virtual const std::pair<int, int> getPosition() const = 0;
             virtual void displayObject(Rectangle destRect) = 0;
             virtual void display(Rectangle _window_map, std::pair<int, int> sizeMap) = 0;
+            virtual CaseType getType() const = 0;
     };
 }

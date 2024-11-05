@@ -18,8 +18,10 @@ namespace Snake {
             const std::pair<int, int> getPosition() const;
             void displayObject(Rectangle destRect);
             void display(Rectangle _window_map, std::pair<int, int> sizeMap);
+            CaseType getType() const;
         protected:
             std::pair<int, int> _position;
             Texture2D _object;
+            CaseType _type = CaseType::EMPTY;
     };
 }

@@ -10,15 +10,9 @@
 #include <map>
 #include <memory>
 #include "Apple.hpp"
+#include "Empty.hpp"
 
 namespace Snake {
-
-    enum class TypeCase {
-        EMPTY,
-        SNAKE,
-        BODY,
-        APPLE
-    };
 
     class Map { // Correct public inheritance
         public:
@@ -28,12 +22,12 @@ namespace Snake {
             void resize(int x, int y);
             std::pair<int, int> getSizeMap() const;
             std::vector<std::pair<int, int>> getFreeSlots() const;
-            const std::vector<std::vector<TypeCase>>& getMap() const;
-            const std::unique_ptr<Snake::Apple>& getApple() const; // Move unique pointer
+            const std::vector<std::vector<std::shared_ptr<ACase>>>& getMap() const;
+            const std::shared_ptr<Snake::Apple>& getApple() const; // Move unique pointer
             void setApplePosition();
     private:
         std::pair<int, int> _size_map;
-        std::vector<std::vector<TypeCase>> _map;
-        std::unique_ptr<Apple> _apple; // Unique pointer to manage Apple
+        std::vector<std::vector<std::shared_ptr<ACase>>> _map;
+        std::shared_ptr<Apple> _apple; // Unique pointer to manage Apple
     };
 }

@@ -9,6 +9,7 @@
 Snake::Apple::Apple()
 {
     _object = LoadTexture("assets/apple.png");
+    _type = CaseType::APPLE;
 }
 
 Snake::Apple::~Apple()

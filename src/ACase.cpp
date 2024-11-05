@@ -39,3 +39,8 @@ void Snake::ACase::display(Rectangle _window_map, std::pair<int, int> sizeMap)
                     square_width,
                     square_height});
 }
+
+Snake::CaseType Snake::ACase::getType() const
+{
+    return _type;
+}
