@@ -1,14 +1,13 @@
+add_subdirectory(objects)
 set(INCROOT ${CMAKE_SOURCE_DIR}/includes/map)
 set(SRCROOT ${CMAKE_SOURCE_DIR}/src/map)
 set(SRC
-    ${INCROOT}/Apple.hpp
-    ${SRCROOT}/Apple.cpp
     ${INCROOT}/Map.hpp
     ${SRCROOT}/Map.cpp
 )
 add_library(map STATIC ${SRC})
-target_link_libraries(map PRIVATE raylib src)
+target_link_libraries(map PRIVATE raylib src objects)
 target_include_directories(map PUBLIC
     ${INCROOT}
-    ${CMAKE_SOURCE_DIR}/includes/
+    ${INCROOT}/objects
 )

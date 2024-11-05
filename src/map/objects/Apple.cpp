@@ -15,9 +15,3 @@ Snake::Apple::~Apple()
 {
     UnloadTexture(_object);
 }
-
-Snake::Apple &Snake::Apple::operator=(const Snake::Apple &apple)
-{
-    _object = apple._object;
-    return *this;
-}

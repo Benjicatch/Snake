@@ -14,6 +14,5 @@ namespace Snake {
     public:
         Apple();
         ~Apple();
-        Apple &operator=(const Apple &apple);
     };
 }
