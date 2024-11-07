@@ -11,6 +11,7 @@
 #include <memory>
 #include "Apple.hpp"
 #include "Empty.hpp"
+#include "Player.hpp"
 
 namespace Snake {
 
@@ -24,10 +25,12 @@ namespace Snake {
             std::vector<std::pair<int, int>> getFreeSlots() const;
             const std::vector<std::vector<std::shared_ptr<ACase>>>& getMap() const;
             const std::shared_ptr<Snake::Apple>& getApple() const; // Move unique pointer
-            void setApplePosition();
+            void checkSetApplePosition();
     private:
+        void setApplePosition();
         std::pair<int, int> _size_map;
         std::vector<std::vector<std::shared_ptr<ACase>>> _map;
         std::shared_ptr<Apple> _apple;
+        std::shared_ptr<Player> _player;
     };
 }

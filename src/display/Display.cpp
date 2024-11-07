@@ -78,12 +78,6 @@ void Snake::Display::displayMap()
     }
 }
 
-void Snake::Display::displayApple()
-{
-    _map->setApplePosition();
-    _map->getApple()->display(_window_map, _map->getSizeMap());
-}
-
 void Snake::Display::display()
 {
     while (!WindowShouldClose()) {
@@ -93,7 +87,7 @@ void Snake::Display::display()
         ClearBackground(RAYWHITE);
         displayBackground();
         _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
-        _map->setApplePosition();
+        _map->checkSetApplePosition();
         displayMap();
         EndDrawing();
     }

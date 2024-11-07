@@ -21,7 +21,6 @@ namespace Snake {
             void display();
             void displayMap();
             void displaySnake();
-            void displayApple();
             void displayScore();
             void displayGameOver();
             void displayPause();

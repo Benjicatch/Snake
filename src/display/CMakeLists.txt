@@ -11,4 +11,5 @@ target_include_directories(display PUBLIC
     ${CMAKE_SOURCE_DIR}/includes/
 )
 target_link_libraries(display PRIVATE
-    map)
+    map
+    player)

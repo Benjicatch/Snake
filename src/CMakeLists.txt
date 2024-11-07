@@ -12,4 +12,4 @@ target_include_directories(src PUBLIC
 
 add_subdirectory(display)
 add_subdirectory(map)
-# add_subdirectory(player)
+add_subdirectory(player)

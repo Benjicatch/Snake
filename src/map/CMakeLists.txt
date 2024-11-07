@@ -6,7 +6,7 @@ set(SRC
     ${SRCROOT}/Map.cpp
 )
 add_library(map STATIC ${SRC})
-target_link_libraries(map PRIVATE raylib src objects)
+target_link_libraries(map PRIVATE raylib src objects player)
 target_include_directories(map PUBLIC
     ${INCROOT}
     ${INCROOT}/objects
