@@ -14,5 +14,6 @@ namespace Snake {
     public:
         Empty();
         ~Empty();
+        void display(Rectangle _window_map, std::pair<int, int> sizeMap) override;
     };
 }

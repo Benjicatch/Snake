@@ -6,7 +6,7 @@
 */
 #include "Map.hpp"
 
-Snake::Map::Map(int x, int y) : _size_map({x, y}), _map()
+Snake::Map::Map(int x, int y) : _size_map({x, y}), _map(x, std::vector<std::shared_ptr<Snake::ACase>>(y))
 {
     srand(time(NULL));
     this->resize(x, y);

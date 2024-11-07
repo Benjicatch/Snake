@@ -28,6 +28,6 @@ namespace Snake {
     private:
         std::pair<int, int> _size_map;
         std::vector<std::vector<std::shared_ptr<ACase>>> _map;
-        std::shared_ptr<Apple> _apple; // Unique pointer to manage Apple
+        std::shared_ptr<Apple> _apple;
     };
 }

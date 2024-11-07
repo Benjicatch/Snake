@@ -14,3 +14,7 @@ Snake::Empty::Empty()
 Snake::Empty::~Empty()
 {
 }
+
+void Snake::Empty::display(Rectangle _window_map, std::pair<int, int> sizeMap)
+{
+}

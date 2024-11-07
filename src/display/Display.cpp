@@ -65,6 +65,7 @@ void Snake::Display::displayMap()
 {
     float square_width = _window_map.width / _map->getSizeMap().first;
     float square_height = _window_map.height / _map->getSizeMap().second;
+    auto map = _map->getMap();
 
     for (int i = 0; i < _map->getSizeMap().first; i++) {
         for (int j = 0; j < _map->getSizeMap().second; j++) {
@@ -72,7 +73,7 @@ void Snake::Display::displayMap()
                            _window_map.y + j * square_height,
                            square_width,
                            square_height });
-            // DrawRectangleLines(_window_map.x + i * square_width, _window_map.y + j * square_height, square_width, square_height, BLACK);
+            map[i][j]->display(_window_map, _map->getSizeMap());
         }
     }
 }
@@ -92,8 +93,8 @@ void Snake::Display::display()
         ClearBackground(RAYWHITE);
         displayBackground();
         _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
+        _map->setApplePosition();
         displayMap();
-        displayApple();
         EndDrawing();
     }
 }
