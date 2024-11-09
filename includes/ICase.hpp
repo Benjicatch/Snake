@@ -19,6 +19,13 @@ namespace Snake {
         SNAKE_HEAD
     };
 
+    enum class Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    };
+
     class ICase
     {
         public:

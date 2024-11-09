@@ -11,7 +11,8 @@ Snake::Display::Display() : _screen_width(800), _screen_height(450)
 {
     InitWindow(_screen_width, _screen_height, "Snake");
     _map = std::make_shared<Map>(10, 5);
-    SetTargetFPS(60);
+    SetTargetFPS(FPS);
+    _timer = TIMER;
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
     _grass = LoadTexture("assets/grass.png");
@@ -73,8 +74,55 @@ void Snake::Display::displayMap()
                            _window_map.y + j * square_height,
                            square_width,
                            square_height });
-            map[i][j]->display(_window_map, _map->getSizeMap());
+            if (map[i][j] != nullptr)
+                map[i][j]->display(_window_map, _map->getSizeMap());
         }
+    }
+}
+
+void Snake::Display::handleEvent()
+{
+    switch (_last_direction) {
+        case Snake::Direction::UP:
+            _map->setPlayerPosition(Direction::UP);
+            break;
+        case Snake::Direction::DOWN:
+            _map->setPlayerPosition(Direction::DOWN);
+            break;
+        case Snake::Direction::LEFT:
+            _map->setPlayerPosition(Direction::LEFT);
+            break;
+        case Snake::Direction::RIGHT:
+            _map->setPlayerPosition(Direction::RIGHT);
+            break;
+        default:
+            _map->setPlayerPosition(_last_direction);
+            break;
+    }
+    _last_direction = _map->getPlayer()->getDirection();
+}
+
+void Snake::Display::getEvent()
+{
+    auto event = GetKeyPressed();
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        CloseWindow();
+    }
+    switch (event) {
+        case KEY_UP:
+            _last_direction = Direction::UP;
+            break;
+        case KEY_DOWN:
+            _last_direction = Direction::DOWN;
+            break;
+        case KEY_LEFT:
+            _last_direction = Direction::LEFT;
+            break;
+        case KEY_RIGHT:
+            _last_direction = Direction::RIGHT;
+            break;
+        default:
+            break;
     }
 }
 
@@ -86,8 +134,14 @@ void Snake::Display::display()
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayBackground();
+        getEvent();
         _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
-        _map->checkSetApplePosition();
+        if (_timer <= 0) {
+            _timer = TIMER;
+            handleEvent();
+        } else {
+            _timer--;
+        }
         displayMap();
         EndDrawing();
     }

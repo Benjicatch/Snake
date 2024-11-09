@@ -7,37 +7,33 @@
 
 #pragma once
 #include <iostream>
+#include <vector>
+#include <deque>
 #include "ACase.hpp"
 
 namespace Snake {
 
-    enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    };
-
-    class Body
-    {
+    class Body : public ACase {
         public:
-            Body();
+            Body(int x, int y);
             ~Body();
-            void move(Direction direction);
-
+            void setOldPosition();
+            std::pair<int, int> getOldPosition() const;
         private:
-            std::pair<int, int> _position;
+            std::pair<int, int> _old_position;
     };
 
     class Player : public ACase
     {
         public:
-            Player();
+            Player(int x, int y);
             ~Player();
-            void move(Direction direction);
-            void eat();
-
+            void moveBody(Direction direction);
+            void addBody();
+            std::deque<std::shared_ptr<Body>> getBody() const;
+            Direction getDirection() const;
         private:
-            std::pair<int, int> _position;
+            std::deque<std::shared_ptr<Body>> _body;
+            Direction _direction = Direction::LEFT;
     };
 }
