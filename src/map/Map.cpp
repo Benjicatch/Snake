@@ -12,11 +12,11 @@ Snake::Map::Map(int x, int y) : _size_map({x, y}), _map(x, std::vector<std::shar
     this->resize(x, y);
     _player = std::make_shared<Player>(x / 2, y / 2);
     _apple = std::make_shared<Apple>();
-    setApplePosition();
     _map[_player->getPosition().first][_player->getPosition().second] = _player;
     for (auto body : _player->getBody()) {
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
+    setApplePosition();
 }
 
 Snake::Map::~Map()
@@ -83,6 +83,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
 {
     std::pair<int, int> new_position = _player->getPosition();
     std::shared_ptr<Snake::ICase> case_game;
+    bool eat_apple = false;
 
     switch (direction) {
         case Direction::UP:
@@ -98,20 +99,21 @@ bool Snake::Map::setPlayerPosition(Direction direction)
             new_position.first += 1;
             break;
     }
-    case_game = _map[new_position.first][new_position.second];
     if (new_position.first < 0 || new_position.first >= _size_map.first || new_position.second < 0 || new_position.second >= _size_map.second) {
         return false;
     }
+    case_game = _map[new_position.first][new_position.second];
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::SNAKE_BODY) {
         return false;
     }
+    _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
     for (auto body : _player->getBody()) {
         _map[body->getPosition().first][body->getPosition().second] = nullptr;
     }
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::APPLE) {
         std::cout << "EAT APPLE" << std::endl;
         _player->addBody();
-        setApplePosition();
+        eat_apple = true;
     } else {
         _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
         _player->moveBody(direction);
@@ -121,6 +123,9 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     }
     _player->setPosition(new_position);
     _map[new_position.first][new_position.second] = _player;
+    if (eat_apple) {
+        checkSetApplePosition();
+    }
     return true;
 }
 
