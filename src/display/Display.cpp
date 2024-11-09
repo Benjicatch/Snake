@@ -99,7 +99,6 @@ void Snake::Display::handleEvent()
             _map->setPlayerPosition(_last_direction);
             break;
     }
-    _last_direction = _map->getPlayer()->getDirection();
 }
 
 void Snake::Display::getEvent()

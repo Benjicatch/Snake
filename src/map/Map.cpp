@@ -84,6 +84,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     std::pair<int, int> new_position = _player->getPosition();
     std::shared_ptr<Snake::ICase> case_game;
     bool eat_apple = false;
+    std::pair<int, int> player_position = _player->getPosition();
 
     switch (direction) {
         case Direction::UP:
@@ -111,8 +112,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         _map[body->getPosition().first][body->getPosition().second] = nullptr;
     }
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::APPLE) {
-        std::cout << "EAT APPLE" << std::endl;
-        _player->addBody();
+        _player->addBody(player_position.first, player_position.second);
         eat_apple = true;
     } else {
         _map[_player->getPosition().first][_player->getPosition().second] = nullptr;

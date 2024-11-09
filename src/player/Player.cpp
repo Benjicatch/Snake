@@ -34,7 +34,7 @@ Snake::Player::Player(int x, int y)
     _position = {x, y};
     _object = LoadTexture("assets/head.png");
     _type = CaseType::SNAKE_HEAD;
-    // addBody();
+    addBody(x + 1, y);
 }
 
 Snake::Player::~Player()
@@ -46,7 +46,6 @@ void Snake::Player::moveBody(Direction direction)
 {
     std::pair<int, int> tmp = _position;
 
-    _direction = direction;
     switch (direction) {
         case Direction::UP:
             _position.second -= 1;
@@ -70,20 +69,15 @@ void Snake::Player::moveBody(Direction direction)
     }
 }
 
-void Snake::Player::addBody()
+void Snake::Player::addBody(int x, int y)
 {
     std::shared_ptr<Snake::Body> new_body;
 
-    new_body = std::make_shared<Body>(_position.first, _position.second);
+    new_body = std::make_shared<Body>(x, y);
     _body.push_front(new_body);
 }
 
 std::deque<std::shared_ptr<Snake::Body>> Snake::Player::getBody() const
 {
     return _body;
-}
-
-Snake::Direction Snake::Player::getDirection() const
-{
-    return _direction;
 }

@@ -29,11 +29,9 @@ namespace Snake {
             Player(int x, int y);
             ~Player();
             void moveBody(Direction direction);
-            void addBody();
+            void addBody(int x, int y);
             std::deque<std::shared_ptr<Body>> getBody() const;
-            Direction getDirection() const;
         private:
             std::deque<std::shared_ptr<Body>> _body;
-            Direction _direction = Direction::LEFT;
     };
 }
