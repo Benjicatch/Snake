@@ -31,7 +31,10 @@ namespace Snake {
             void moveBody(Direction direction);
             void addBody(int x, int y);
             std::deque<std::shared_ptr<Body>> getBody() const;
+            void setAlive(bool isAlive);
+            bool isAlive() const;
         private:
             std::deque<std::shared_ptr<Body>> _body;
+            bool _isAlive;
     };
 }

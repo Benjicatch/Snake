@@ -103,10 +103,12 @@ bool Snake::Map::setPlayerPosition(Direction direction)
             break;
     }
     if (new_position.first < 0 || new_position.first >= _size_map.first || new_position.second < 0 || new_position.second >= _size_map.second) {
+        _player->setAlive(false);
         return false;
     }
     case_game = _map[new_position.first][new_position.second];
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::SNAKE_BODY) {
+        _player->setAlive(false);
         return false;
     }
     _map[_player->getPosition().first][_player->getPosition().second] = nullptr;

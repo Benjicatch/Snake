@@ -136,6 +136,11 @@ void Snake::Display::displayGame()
     displayMap();
 }
 
+void Snake::Display::displayGameOver()
+{
+    DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
+}
+
 void Snake::Display::display()
 {
     while (!WindowShouldClose()) {
@@ -144,10 +149,14 @@ void Snake::Display::display()
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayBackground();
-        getEvent();
-        _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
-        displayGame();
-        displayScore();
+        if (!_map->getPlayer()->isAlive()) {
+            displayGameOver();
+        } else {
+            getEvent();
+            _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
+            displayGame();
+            displayScore();
+        }
         EndDrawing();
     }
 }
