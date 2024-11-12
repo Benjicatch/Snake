@@ -125,6 +125,17 @@ void Snake::Display::getEvent()
     }
 }
 
+void Snake::Display::displayGame()
+{
+    if (_timer <= 0) {
+        _timer = TIMER;
+        handleEvent();
+    } else {
+        _timer--;
+    }
+    displayMap();
+}
+
 void Snake::Display::display()
 {
     while (!WindowShouldClose()) {
@@ -135,13 +146,14 @@ void Snake::Display::display()
         displayBackground();
         getEvent();
         _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
-        if (_timer <= 0) {
-            _timer = TIMER;
-            handleEvent();
-        } else {
-            _timer--;
-        }
-        displayMap();
+        displayGame();
+        displayScore();
         EndDrawing();
     }
+}
+
+void Snake::Display::displayScore()
+{
+    DrawText("Score: ", 10, 10, 20, BLACK);
+    DrawText(std::to_string(_map->getScore()).c_str(), 100, 10, 20, BLACK);
 }

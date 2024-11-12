@@ -22,12 +22,12 @@ namespace Snake {
             ~Display();
             void display();
             void displayMap();
-            void displaySnake();
             void displayScore();
             void displayGameOver();
             void displayPause();
             void displayMenu();
             void displaySettings();
+            void displayGame();
             void displayBackground();
             void displayGrass(Rectangle destRect);
 

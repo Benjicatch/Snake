@@ -17,6 +17,7 @@ Snake::Map::Map(int x, int y) : _size_map({x, y}), _map(x, std::vector<std::shar
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     setApplePosition();
+    _score = 0;
 }
 
 Snake::Map::~Map()
@@ -75,6 +76,7 @@ void Snake::Map::setApplePosition()
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = rand() % free_slots.size();
 
+    _score += 1;
     _apple->setPosition(free_slots[index]);
     _map[free_slots[index].first][free_slots[index].second] = _apple;
 }
@@ -134,4 +136,9 @@ void Snake::Map::checkSetApplePosition()
     if (_map[_apple->getPosition().first][_apple->getPosition().second]->getType() != Snake::CaseType::APPLE) {
         setApplePosition();
     }
+}
+
+int Snake::Map::getScore() const
+{
+    return _score;
 }
