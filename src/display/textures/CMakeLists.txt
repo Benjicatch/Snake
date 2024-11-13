@@ -3,6 +3,8 @@ set(SRCROOT ${CMAKE_SOURCE_DIR}/src/display/textures)
 set(SRC
     ${INCROOT}/Settings.hpp
     ${SRCROOT}/Settings.cpp
+    ${INCROOT}/Play.hpp
+    ${SRCROOT}/Play.cpp
 )
 add_library(textures STATIC ${SRC})
 target_link_libraries(textures PRIVATE raylib)

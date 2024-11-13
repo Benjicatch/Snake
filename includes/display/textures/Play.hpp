@@ -1,18 +1,18 @@
 /*
 ** CCU, 2024
-** Settings.hpp
+** Play.hpp
 ** File description:
-** Settings
+** Play
 */
 
 #pragma once
 #include "ADisplay.hpp"
 
 namespace Snake {
-    class Settings : public ADisplay {
+    class Play : public ADisplay {
         public:
-            Settings(std::pair<float&, float&> &window, Status &status);
-            ~Settings();
+            Play(std::pair<float&, float&> &window, Status &status);
+            ~Play();
             void display() override;
             void displayAndCheckButton() override;
     };

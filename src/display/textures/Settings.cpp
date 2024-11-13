@@ -7,7 +7,7 @@
 
 #include "Settings.hpp"
 
-Snake::Settings::Settings(std::pair<float&, float&> &window) : ADisplay(window.first, window.second)
+Snake::Settings::Settings(std::pair<float&, float&> &window, Status &statue) : ADisplay(window.first, window.second, statue)
 {
     _object = LoadTexture("assets/settings.png");
 }
@@ -26,4 +26,11 @@ void Snake::Settings::display()
     _btnBounds = destRect;
 
     displayObject(destRect);
+}
+
+void Snake::Settings::displayAndCheckButton()
+{
+    display();
+    if (isMouseOverButtonClicked())
+        _status = Status::SETTINGS;
 }

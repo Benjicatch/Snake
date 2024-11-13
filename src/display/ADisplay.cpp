@@ -7,7 +7,7 @@
 
 #include "ADisplay.hpp"
 
-Snake::ADisplay::ADisplay(float &screen_width, float &screen_height) : _window(screen_width, screen_height)
+Snake::ADisplay::ADisplay(float &screen_width, float &screen_height, Status &statue) : _window(screen_width, screen_height), _status(statue)
 {
 }
 

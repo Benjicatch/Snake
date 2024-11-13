@@ -10,12 +10,14 @@
 #include "Map.hpp"
 #include "Apple.hpp"
 #include "Settings.hpp"
+#include "Play.hpp"
 #include "raylib.h"
 
 namespace Snake {
 
     #define FPS 60
     #define TIMER 20
+
     class Display
     {
         public:
@@ -31,13 +33,11 @@ namespace Snake {
             void displayGame();
             void displayBackground();
             void displayGrass(Rectangle destRect);
-
             void setScreenWidth(float screen_width);
             void setScreenHeight(float screen_height);
-            float getScreenWidth();
-            float getScreenHeight();
             void handleEvent();
             void getEvent();
+            void chooseDisplay();
         private:
             int _timer;
             float _screen_width;
@@ -45,9 +45,11 @@ namespace Snake {
             std::shared_ptr<Map> _map;
             Vector2 _mousePoint = { 0.0f, 0.0f };
             std::unique_ptr<Settings> _settings;
+            std::unique_ptr<Play> _play;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;
             Direction _last_direction = Snake::Direction::LEFT;
+            Status _status = Snake::Status::MENU;
     };
 }
