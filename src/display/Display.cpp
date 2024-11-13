@@ -9,6 +9,7 @@
 
 Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
 {
+    std::pair<float&, float&> window = { _screen_width, _screen_height };
     InitWindow(_screen_width, _screen_height, "Snake");
     _map = std::make_shared<Map>(x, y);
     SetTargetFPS(FPS);
@@ -16,6 +17,7 @@ Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
     _grass = LoadTexture("assets/grass.png");
+    _settings = std::make_unique<Settings>(window);
 }
 
 Snake::Display::~Display()
@@ -157,6 +159,8 @@ void Snake::Display::display()
         if (!_map->getPlayer()->isAlive()) {
             displayGameOver();
             displayScore();
+            _settings->display();
+            _settings->isMouseOverButtonClicked();
         } else {
             getEvent();
             _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };

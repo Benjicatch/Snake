@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Map.hpp"
 #include "Apple.hpp"
+#include "Settings.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -42,6 +43,8 @@ namespace Snake {
             float _screen_width;
             float _screen_height;
             std::shared_ptr<Map> _map;
+            Vector2 _mousePoint = { 0.0f, 0.0f };
+            std::unique_ptr<Settings> _settings;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;
