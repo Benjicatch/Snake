@@ -7,10 +7,10 @@
 
 #include "Display.hpp"
 
-Snake::Display::Display() : _screen_width(800), _screen_height(450)
+Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
 {
     InitWindow(_screen_width, _screen_height, "Snake");
-    _map = std::make_shared<Map>(10, 5);
+    _map = std::make_shared<Map>(x, y);
     SetTargetFPS(FPS);
     _timer = TIMER;
     SetWindowState(FLAG_WINDOW_RESIZABLE);
@@ -141,6 +141,11 @@ void Snake::Display::displayGameOver()
     DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
 }
 
+void Snake::Display::displayPause()
+{
+    DrawText("Pause", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
+}
+
 void Snake::Display::display()
 {
     while (!WindowShouldClose()) {
@@ -151,6 +156,7 @@ void Snake::Display::display()
         displayBackground();
         if (!_map->getPlayer()->isAlive()) {
             displayGameOver();
+            displayScore();
         } else {
             getEvent();
             _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };

@@ -6,8 +6,13 @@
 */
 #include "Map.hpp"
 
-Snake::Map::Map(int x, int y) : _size_map({x, y}), _map(x, std::vector<std::shared_ptr<Snake::ICase>>(y))
+Snake::Map::Map(int x, int y)
 {
+    if (x < 5 || y < 5) {
+        throw std::invalid_argument("Map size must be at least 5x5");
+    }
+    _size_map = {x, y};
+    _map = std::vector<std::vector<std::shared_ptr<Snake::ICase>>>(x);
     srand(time(NULL));
     this->resize(x, y);
     _player = std::make_shared<Player>(x / 2, y / 2);

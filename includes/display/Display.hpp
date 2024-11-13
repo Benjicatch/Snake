@@ -18,7 +18,7 @@ namespace Snake {
     class Display
     {
         public:
-            Display();
+            Display(int x, int y);
             ~Display();
             void display();
             void displayMap();
