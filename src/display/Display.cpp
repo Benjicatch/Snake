@@ -19,6 +19,7 @@ Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
     _grass = LoadTexture("assets/grass.png");
     _settings = std::make_unique<Settings>(window, _status);
     _play = std::make_unique<Play>(window, _status);
+    _pause = std::make_unique<Pause>(window, _status);
 }
 
 Snake::Display::~Display()
@@ -94,11 +95,6 @@ void Snake::Display::displayGameOver()
     _settings->displayAndCheckButton();
 }
 
-void Snake::Display::displayPause()
-{
-    DrawText("Pause", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
-}
-
 void Snake::Display::displayScore()
 {
     DrawText("Score: ", 10, 10, 20, BLACK);
@@ -139,13 +135,23 @@ void Snake::Display::displayGame()
     if (_timer <= 0) {
         _timer = TIMER;
         handleEvent();
-    } else {
+    } else if (_status != Snake::Status::PAUSE) {
         _timer--;
     }
     if (!_map->getPlayer()->isAlive())
         _status = Snake::Status::GAME_OVER;
     displayMap();
     displayScore();
+    _pause->displayAndCheckButton();
+}
+
+// -------------------------------- display pause --------------------------------
+
+void Snake::Display::displayPause()
+{
+    DrawText("Pause", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
+    _settings->displayAndCheckButton();
+    _play->displayAndCheckButton();
 }
 
 // -------------------------------- display menu --------------------------------

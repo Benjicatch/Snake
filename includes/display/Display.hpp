@@ -11,6 +11,7 @@
 #include "Apple.hpp"
 #include "Settings.hpp"
 #include "Play.hpp"
+#include "Pause.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -46,6 +47,7 @@ namespace Snake {
             Vector2 _mousePoint = { 0.0f, 0.0f };
             std::unique_ptr<Settings> _settings;
             std::unique_ptr<Play> _play;
+            std::unique_ptr<Pause> _pause;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;

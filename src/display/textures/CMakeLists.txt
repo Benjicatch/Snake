@@ -5,6 +5,8 @@ set(SRC
     ${SRCROOT}/Settings.cpp
     ${INCROOT}/Play.hpp
     ${SRCROOT}/Play.cpp
+    ${INCROOT}/Pause.hpp
+    ${SRCROOT}/Pause.cpp
 )
 add_library(textures STATIC ${SRC})
 target_link_libraries(textures PRIVATE raylib)
