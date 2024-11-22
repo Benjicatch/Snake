@@ -23,7 +23,8 @@ namespace Snake {
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        NONE
     };
 
     class ICase

@@ -31,6 +31,7 @@ namespace Snake {
     private:
         void setApplePosition();
         int _score;
+        Direction _last_direction;
         std::pair<int, int> _size_map;
         std::vector<std::vector<std::shared_ptr<ICase>>> _map;
         std::shared_ptr<Apple> _apple;

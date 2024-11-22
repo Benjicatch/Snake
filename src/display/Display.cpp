@@ -17,9 +17,9 @@ Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
     _grass = LoadTexture("assets/grass.png");
-    _settings = std::make_unique<Settings>(window, _status);
-    _play = std::make_unique<Play>(window, _status);
     _pause = std::make_unique<Pause>(window, _status);
+    _settings = std::make_unique<SettingsView>(window, _status);
+    _menu = std::make_unique<Menu>(window, _status);
 }
 
 Snake::Display::~Display()
@@ -43,23 +43,8 @@ void Snake::Display::setScreenWidth(float screen_width)
 
 void Snake::Display::handleEvent()
 {
-    switch (_last_direction) {
-        case Snake::Direction::UP:
-            _map->setPlayerPosition(Direction::UP);
-            break;
-        case Snake::Direction::DOWN:
-            _map->setPlayerPosition(Direction::DOWN);
-            break;
-        case Snake::Direction::LEFT:
-            _map->setPlayerPosition(Direction::LEFT);
-            break;
-        case Snake::Direction::RIGHT:
-            _map->setPlayerPosition(Direction::RIGHT);
-            break;
-        default:
-            _map->setPlayerPosition(_last_direction);
-            break;
-    }
+    _map->setPlayerPosition(_last_direction.front());
+    _last_direction.pop_front();
 }
 
 void Snake::Display::getEvent()
@@ -70,20 +55,29 @@ void Snake::Display::getEvent()
     }
     switch (event) {
         case KEY_UP:
-            _last_direction = Direction::UP;
+        case KEY_Z:
+            _last_direction.push_back(Direction::UP);
             break;
         case KEY_DOWN:
-            _last_direction = Direction::DOWN;
+        case KEY_S:
+            _last_direction.push_back(Direction::DOWN);
             break;
         case KEY_LEFT:
-            _last_direction = Direction::LEFT;
+        case KEY_Q:
+            _last_direction.push_back(Direction::LEFT);
             break;
         case KEY_RIGHT:
-            _last_direction = Direction::RIGHT;
+        case KEY_D:
+            _last_direction.push_back(Direction::RIGHT);
             break;
         default:
+            _last_direction.push_back(Direction::NONE);
             break;
     }
+    if (_last_direction.size() > 1)
+        _last_direction.erase(std::remove(_last_direction.begin(), _last_direction.end(), Direction::NONE), _last_direction.end());
+    else
+        _last_direction.erase(unique( _last_direction.begin(), _last_direction.end() ), _last_direction.end());
 }
 
 // -------------------------------- text display --------------------------------
@@ -92,7 +86,7 @@ void Snake::Display::displayGameOver()
 {
     DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
     displayScore();
-    _settings->displayAndCheckButton();
+    // _settings->displayAndCheckButton();
 }
 
 void Snake::Display::displayScore()
@@ -150,17 +144,8 @@ void Snake::Display::displayGame()
 void Snake::Display::displayPause()
 {
     DrawText("Pause", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
-    _settings->displayAndCheckButton();
-    _play->displayAndCheckButton();
-}
-
-// -------------------------------- display menu --------------------------------
-
-void Snake::Display::displayMenu()
-{
-    DrawText("Menu", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
-    _settings->displayAndCheckButton();
-    _play->displayAndCheckButton();
+    // _settings->dlisplayAndCheckButton();
+    // _play->dispayAndCheckButton();
 }
 
 // -------------------------------- display loop --------------------------------
@@ -178,13 +163,13 @@ void Snake::Display::chooseDisplay()
 {
     switch (_status) {
         case Snake::Status::MENU:
-            displayMenu();
+            _menu->display();
             break;
         case Snake::Status::GAME:
             displayGame();
             break;
         case Snake::Status::SETTINGS:
-            // displaySettings();
+            _settings->display();
             break;
         case Snake::Status::PAUSE:
             displayPause();

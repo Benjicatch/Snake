@@ -7,11 +7,15 @@
 
 #pragma once
 #include <iostream>
+#include <algorithm>
 #include "Map.hpp"
 #include "Apple.hpp"
 #include "Settings.hpp"
 #include "Play.hpp"
 #include "Pause.hpp"
+#include "Back.hpp"
+#include "Menu.hpp"
+#include "SettingsView.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -29,8 +33,6 @@ namespace Snake {
             void displayScore();
             void displayGameOver();
             void displayPause();
-            void displayMenu();
-            void displaySettings();
             void displayGame();
             void displayBackground();
             void displayGrass(Rectangle destRect);
@@ -45,13 +47,13 @@ namespace Snake {
             float _screen_height;
             std::shared_ptr<Map> _map;
             Vector2 _mousePoint = { 0.0f, 0.0f };
-            std::unique_ptr<Settings> _settings;
-            std::unique_ptr<Play> _play;
             std::unique_ptr<Pause> _pause;
+            std::unique_ptr<SettingsView> _settings;
+            std::unique_ptr<Menu> _menu;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;
-            Direction _last_direction = Snake::Direction::LEFT;
+            std::deque<Direction> _last_direction = { Direction::LEFT };
             Status _status = Snake::Status::MENU;
     };
 }

@@ -7,6 +7,7 @@ set(SRC
     ${SRCROOT}/ADisplay.cpp
 )
 add_subdirectory(textures)
+add_subdirectory(views)
 add_library(display STATIC ${SRC})
 target_link_libraries(display PRIVATE raylib)
 target_include_directories(display PUBLIC
@@ -16,4 +17,5 @@ target_include_directories(display PUBLIC
 target_link_libraries(display PRIVATE
     map
     player
-    textures)
+    textures
+    views)
