@@ -6,7 +6,7 @@
 */
 #include "Map.hpp"
 
-Snake::Map::Map(int x, int y)
+Snake::Map::Map(int x, int y) : _last_direction(Direction::LEFT), _score(0)
 {
     if (x < 5 || y < 5) {
         throw std::invalid_argument("Map size must be at least 5x5");
@@ -22,7 +22,6 @@ Snake::Map::Map(int x, int y)
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     setApplePosition();
-    _score = 0;
 }
 
 Snake::Map::~Map()

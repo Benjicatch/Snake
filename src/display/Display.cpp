@@ -56,7 +56,7 @@ void Snake::Display::getEvent()
     }
     switch (event) {
         case KEY_UP:
-        case KEY_Z:
+        case KEY_W:
             _last_direction.push_back(Direction::UP);
             break;
         case KEY_DOWN:
@@ -64,7 +64,7 @@ void Snake::Display::getEvent()
             _last_direction.push_back(Direction::DOWN);
             break;
         case KEY_LEFT:
-        case KEY_Q:
+        case KEY_A:
             _last_direction.push_back(Direction::LEFT);
             break;
         case KEY_RIGHT:
@@ -85,16 +85,14 @@ void Snake::Display::getEvent()
 
 void Snake::Display::displayGameOver()
 {
-    DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
+    DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 100, 20, BLACK);
     displayScore();
-    // _settings->displayAndCheckButton();
     _restart->displayAndCheckButton();
 }
 
 void Snake::Display::displayScore()
 {
-    DrawText("Score: ", 10, 10, 20, BLACK);
-    DrawText(std::to_string(_map->getScore()).c_str(), 100, 10, 20, BLACK);
+    DrawText(("Score: " + std::to_string(_map->getScore())).c_str(), 100, 10, 20, BLACK);
 }
 
 // -------------------------------- display game --------------------------------
