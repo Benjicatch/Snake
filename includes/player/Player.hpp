@@ -33,8 +33,10 @@ namespace Snake {
             std::deque<std::shared_ptr<Body>> getBody() const;
             void setAlive(bool isAlive);
             bool isAlive() const;
+            void restart();
         private:
             std::deque<std::shared_ptr<Body>> _body;
             bool _isAlive;
+            std::pair<int, int> _initPosition;
     };
 }

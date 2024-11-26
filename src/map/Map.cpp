@@ -42,6 +42,18 @@ void Snake::Map::resize(int x, int y)
     }
 }
 
+void Snake::Map::restart()
+{
+    resize(_size_map.first, _size_map.second);
+    _player->restart();
+    _map[_player->getPosition().first][_player->getPosition().second] = _player;
+    for (auto body : _player->getBody()) {
+        _map[body->getPosition().first][body->getPosition().second] = body;
+    }
+    setApplePosition();
+    _score = 0;
+}
+
 std::pair<int, int> Snake::Map::getSizeMap() const
 {
     return _size_map;

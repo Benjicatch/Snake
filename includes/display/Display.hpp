@@ -23,8 +23,7 @@ namespace Snake {
     #define FPS 60
     #define TIMER 20
 
-    class Display
-    {
+    class Display {
         public:
             Display(int x, int y);
             ~Display();

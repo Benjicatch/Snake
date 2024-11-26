@@ -29,7 +29,7 @@ std::pair<int, int> Snake::Body::getOldPosition() const
     return _old_position;
 }
 
-Snake::Player::Player(int x, int y) : _isAlive(true)
+Snake::Player::Player(int x, int y) : _isAlive(true), _initPosition({x, y})
 {
     _position = {x, y};
     _object = LoadTexture("assets/head.png");
@@ -90,4 +90,12 @@ void Snake::Player::setAlive(bool isAlive)
 bool Snake::Player::isAlive() const
 {
     return _isAlive;
+}
+
+void Snake::Player::restart()
+{
+    _position = _initPosition;
+    _body.clear();
+    _isAlive = true;
+    addBody(_position.first + 1, _position.second);
 }

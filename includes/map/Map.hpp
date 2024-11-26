@@ -20,6 +20,7 @@ namespace Snake {
             Map(const Map &other) = delete; // Disable copy
             ~Map();
             void resize(int x, int y);
+            void restart();
             std::pair<int, int> getSizeMap() const;
             std::vector<std::pair<int, int>> getFreeSlots() const;
             const std::vector<std::vector<std::shared_ptr<ICase>>>& getMap() const;
