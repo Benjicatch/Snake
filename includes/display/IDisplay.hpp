@@ -16,7 +16,8 @@ namespace Snake {
         GAME,
         SETTINGS,
         PAUSE,
-        GAME_OVER
+        GAME_OVER,
+        RESTART
     };
 
     class IDisplay {

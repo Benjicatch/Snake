@@ -9,6 +9,8 @@ set(SRC
     ${SRCROOT}/Pause.cpp
     ${INCROOT}/Back.hpp
     ${SRCROOT}/Back.cpp
+    ${INCROOT}/Restart.hpp
+    ${SRCROOT}/Restart.cpp
 )
 add_library(textures STATIC ${SRC})
 target_link_libraries(textures PRIVATE raylib)

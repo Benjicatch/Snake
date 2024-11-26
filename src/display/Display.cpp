@@ -20,6 +20,7 @@ Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
     _pause = std::make_unique<Pause>(window, _status);
     _settings = std::make_unique<SettingsView>(window, _status);
     _menu = std::make_unique<Menu>(window, _status);
+    _restart = std::make_unique<Restart>(window, _status);
 }
 
 Snake::Display::~Display()
@@ -87,6 +88,7 @@ void Snake::Display::displayGameOver()
     DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
     displayScore();
     // _settings->displayAndCheckButton();
+    _restart->displayAndCheckButton();
 }
 
 void Snake::Display::displayScore()
@@ -176,6 +178,10 @@ void Snake::Display::chooseDisplay()
             break;
         case Snake::Status::GAME_OVER:
             displayGameOver();
+            break;
+        case Snake::Status::RESTART:
+            _map->restart();
+            _status = Snake::Status::GAME;
             break;
         default:
             break;

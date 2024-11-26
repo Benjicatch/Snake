@@ -15,6 +15,7 @@
 #include "Pause.hpp"
 #include "Back.hpp"
 #include "Menu.hpp"
+#include "Restart.hpp"
 #include "SettingsView.hpp"
 #include "raylib.h"
 
@@ -49,6 +50,7 @@ namespace Snake {
             std::unique_ptr<Pause> _pause;
             std::unique_ptr<SettingsView> _settings;
             std::unique_ptr<Menu> _menu;
+            std::unique_ptr<Restart> _restart;
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;
