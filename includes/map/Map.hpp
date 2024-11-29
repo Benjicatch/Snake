@@ -14,10 +14,10 @@
 
 namespace Snake {
 
-    class Map { // Correct public inheritance
+    class Map {
         public:
             Map(int x, int y);
-            Map(const Map &other) = delete; // Disable copy
+            Map(const Map &other) = delete;
             ~Map();
             void resize(int x, int y);
             void restart();
@@ -28,7 +28,8 @@ namespace Snake {
             const std::shared_ptr<Snake::Player>& getPlayer() const; // Move unique pointer
             void checkSetApplePosition();
             bool setPlayerPosition(Direction direction);
-            int getScore() const;
+            const int getScore() const;
+            const Direction& getLastDirection() const;
     private:
         void setApplePosition();
         int _score;

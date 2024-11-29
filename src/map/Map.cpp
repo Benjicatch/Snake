@@ -50,7 +50,8 @@ void Snake::Map::restart()
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     setApplePosition();
-    _score = 0;
+    _score = 1;
+    _last_direction = Direction::LEFT;
 }
 
 std::pair<int, int> Snake::Map::getSizeMap() const
@@ -124,20 +125,22 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         default:
             break;
     }
-    if (new_position.first < 0 || new_position.first >= _size_map.first || new_position.second < 0 || new_position.second >= _size_map.second) {
+    if (new_position.first < 0 ||
+        new_position.first >= _size_map.first ||
+        new_position.second < 0 ||
+        new_position.second >= _size_map.second) {
         _player->setAlive(false);
         return false;
     }
-    case_game = _map[new_position.first][new_position.second];
     _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
     for (auto body : _player->getBody()) {
         _map[body->getPosition().first][body->getPosition().second] = nullptr;
     }
+    case_game = _map[new_position.first][new_position.second];
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::APPLE) {
         _player->addBody(player_position.first, player_position.second);
         eat_apple = true;
     } else {
-        _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
         _player->moveBody(direction);
     }
     for (auto body : _player->getBody()) {
@@ -163,7 +166,12 @@ void Snake::Map::checkSetApplePosition()
     }
 }
 
-int Snake::Map::getScore() const
+const int Snake::Map::getScore() const
 {
     return _score;
+}
+
+const Snake::Direction& Snake::Map::getLastDirection() const
+{
+    return _last_direction;
 }

@@ -44,8 +44,24 @@ void Snake::Display::setScreenWidth(float screen_width)
 
 void Snake::Display::handleEvent()
 {
-    _map->setPlayerPosition(_last_direction.front());
-    _last_direction.pop_front();
+    Direction direction = _map->getLastDirection();
+    bool isRecursing = false;
+
+    // check if direction are opposite
+    if (direction == Direction::UP && _directions.front() == Direction::DOWN ||
+        direction == Direction::DOWN && _directions.front() == Direction::UP ||
+        direction == Direction::LEFT && _directions.front() == Direction::RIGHT ||
+        direction == Direction::RIGHT && _directions.front() == Direction::LEFT) {
+        _directions.pop_front();
+        isRecursing = true;
+        handleEvent();
+    }
+    if (_directions.size() != 0 && isRecursing == false) {
+        _map->setPlayerPosition(_directions.front());
+        _directions.pop_front();
+    } else if (isRecursing == false) {
+        _map->setPlayerPosition(direction);
+    }
 }
 
 void Snake::Display::getEvent()
@@ -57,28 +73,28 @@ void Snake::Display::getEvent()
     switch (event) {
         case KEY_UP:
         case KEY_W:
-            _last_direction.push_back(Direction::UP);
+            _directions.push_back(Direction::UP);
             break;
         case KEY_DOWN:
         case KEY_S:
-            _last_direction.push_back(Direction::DOWN);
+            _directions.push_back(Direction::DOWN);
             break;
         case KEY_LEFT:
         case KEY_A:
-            _last_direction.push_back(Direction::LEFT);
+            _directions.push_back(Direction::LEFT);
             break;
         case KEY_RIGHT:
         case KEY_D:
-            _last_direction.push_back(Direction::RIGHT);
+            _directions.push_back(Direction::RIGHT);
             break;
         default:
-            _last_direction.push_back(Direction::NONE);
+            _directions.push_back(Direction::NONE);
             break;
     }
-    if (_last_direction.size() > 1)
-        _last_direction.erase(std::remove(_last_direction.begin(), _last_direction.end(), Direction::NONE), _last_direction.end());
+    if (_directions.size() > 1)
+        _directions.erase(std::remove(_directions.begin(), _directions.end(), Direction::NONE), _directions.end());
     else
-        _last_direction.erase(unique( _last_direction.begin(), _last_direction.end() ), _last_direction.end());
+        _directions.erase(unique( _directions.begin(), _directions.end() ), _directions.end());
 }
 
 // -------------------------------- text display --------------------------------

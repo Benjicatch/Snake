@@ -22,7 +22,7 @@
 namespace Snake {
 
     #define FPS 60
-    #define TIMER 20
+    #define TIMER 10
 
     class Display {
         public:
@@ -54,7 +54,7 @@ namespace Snake {
             Texture2D _backg;
             Texture2D _grass;
             Rectangle _window_map;
-            std::deque<Direction> _last_direction = { Direction::LEFT };
+            std::deque<Direction> _directions = { Direction::LEFT };
             Status _status = Snake::Status::MENU;
     };
 }
