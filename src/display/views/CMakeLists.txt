@@ -7,7 +7,7 @@ set(SRC
     ${SRCROOT}/SettingsView.cpp
 )
 add_library(views STATIC ${SRC})
-target_link_libraries(views PRIVATE raylib)
+target_link_libraries(views PRIVATE raylib map player)
 target_include_directories(views PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/

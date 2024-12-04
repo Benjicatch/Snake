@@ -1,8 +1,8 @@
 /*
 ** CCU, 2024
-** IDisplay.hpp
+** IObjectDisplay.hpp
 ** File description:
-** IDisplay
+** IObjectDisplay
 */
 
 #pragma once
@@ -11,18 +11,8 @@
 
 namespace Snake {
 
-    enum Status {
-        MENU,
-        GAME,
-        SETTINGS,
-        PAUSE,
-        GAME_OVER,
-        RESTART
-    };
-
-    class IDisplay {
+    class IObjectDisplay {
         public:
-            virtual ~IDisplay() = 0;
             virtual void display() = 0;
             virtual bool isMouseOverButtonClicked() = 0;
             virtual void displayObject(Rectangle destRect) = 0;

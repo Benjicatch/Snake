@@ -7,9 +7,9 @@
 
 #include "SettingsView.hpp"
 
-Snake::SettingsView::SettingsView(std::pair<float&, float&> &window, Status &status) : _window(window)
+Snake::SettingsView::SettingsView(AViewDisplay &view) : AViewDisplay(view)
 {
-    _back = std::make_unique<Back>(window, status);
+    _back = std::make_unique<Back>(view);
 }
 
 Snake::SettingsView::~SettingsView()
@@ -19,5 +19,5 @@ Snake::SettingsView::~SettingsView()
 void Snake::SettingsView::display()
 {
     _back->displayAndCheckButton();
-    DrawText("Settings", _window.first / 2 - 50, _window.second / 2 - 10, 20, BLACK);
+    DrawText("Settings", _window->first / 2 - 50, _window->second / 2 - 10, 20, BLACK);
 }

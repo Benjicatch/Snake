@@ -1,29 +1,29 @@
 /*
 ** CCU, 2024
-** ADisplay.hpp
+** AObjectDisplay.hpp
 ** File description:
-** ADisplay
+** AObjectDisplay
 */
 
 #pragma once
 #include "raylib.h"
 #include <iostream>
-#include "IDisplay.hpp"
+#include "IViewDisplay.hpp"
+#include "IObjectDisplay.hpp"
+#include "AViewDisplay.hpp"
 
 namespace Snake {
-    class ADisplay {
+    class AObjectDisplay: public IObjectDisplay, public AViewDisplay {
         public:
-            ADisplay(float &screen_width, float &screen_height, Status &status);
-            ~ADisplay() = default;
+            AObjectDisplay(AViewDisplay &view);
+            ~AObjectDisplay() = default;
             virtual void display() = 0;
             bool isMouseOverButtonClicked();
             void displayObject(Rectangle destRect);
             virtual void displayAndCheckButton() = 0;
         protected:
             Texture2D _object;
-            std::pair<float&, float&> _window;
             Vector2 _mousePoint;
             Rectangle _btnBounds;
-            Status &_status;
     };
 }

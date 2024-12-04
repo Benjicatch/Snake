@@ -7,10 +7,10 @@
 
 #include "Menu.hpp"
 
-Snake::Menu::Menu(std::pair<float&, float&> &window, Status &status)
+Snake::Menu::Menu(AViewDisplay &view) : AViewDisplay(view)
 {
-    _settings = std::make_unique<Settings>(window, status);
-    _play = std::make_unique<Play>(window, status);
+    _settings = std::make_unique<Settings>(view);
+    _play = std::make_unique<Play>(view);
 }
 
 Snake::Menu::~Menu()

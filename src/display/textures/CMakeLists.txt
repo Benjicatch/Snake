@@ -18,6 +18,8 @@ target_include_directories(textures PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/
     ${CMAKE_SOURCE_DIR}/includes/display
+    ${CMAKE_SOURCE_DIR}/includes/map/objects
+    ${CMAKE_SOURCE_DIR}/includes/player
 )
 target_link_libraries(textures PRIVATE
     display)

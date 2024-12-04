@@ -4,45 +4,33 @@
 ** File description:
 ** Player
 */
+// setWindow
+#include "DisplayManager.hpp"
 
-#include "Display.hpp"
-
-Snake::Display::Display(int x, int y) : _screen_width(800), _screen_height(450)
+Snake::DisplayManager::DisplayManager(int x, int y) : _timer(TIMER), AViewDisplay(Snake::Status::MENU)
 {
-    std::pair<float&, float&> window = { _screen_width, _screen_height };
-    InitWindow(_screen_width, _screen_height, "Snake");
+    InitWindow(_window->first, _window->second, "Snake");
     _map = std::make_shared<Map>(x, y);
     SetTargetFPS(FPS);
-    _timer = TIMER;
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
     _grass = LoadTexture("assets/grass.png");
-    _pause = std::make_unique<Pause>(window, _status);
-    _settings = std::make_unique<SettingsView>(window, _status);
-    _menu = std::make_unique<Menu>(window, _status);
-    _restart = std::make_unique<Restart>(window, _status);
+    _pause = std::make_unique<Pause>(dynamic_cast<AViewDisplay&>(*this));
+    _settings = std::make_unique<SettingsView>(dynamic_cast<AViewDisplay&>(*this));
+    _menu = std::make_unique<Menu>(dynamic_cast<AViewDisplay&>(*this));
+    _restart = std::make_unique<Restart>(dynamic_cast<AViewDisplay&>(*this));
 }
 
-Snake::Display::~Display()
+Snake::DisplayManager::~DisplayManager()
 {
     UnloadTexture(_backg);
     UnloadTexture(_grass);
     CloseWindow();
 }
 
-void Snake::Display::setScreenHeight(float screen_height)
-{
-    _screen_height = screen_height;
-}
-
-void Snake::Display::setScreenWidth(float screen_width)
-{
-    _screen_width = screen_width;
-}
-
 // -------------------------------- event --------------------------------
 
-void Snake::Display::handleEvent()
+void Snake::DisplayManager::handleEvent()
 {
     Direction direction = _map->getLastDirection();
     bool isRecursing = false;
@@ -64,7 +52,7 @@ void Snake::Display::handleEvent()
     }
 }
 
-void Snake::Display::getEvent()
+void Snake::DisplayManager::getEvent()
 {
     auto event = GetKeyPressed();
     if (IsKeyPressed(KEY_ESCAPE)) {
@@ -99,21 +87,21 @@ void Snake::Display::getEvent()
 
 // -------------------------------- text display --------------------------------
 
-void Snake::Display::displayGameOver()
+void Snake::DisplayManager::displayGameOver()
 {
-    DrawText("Game Over", _screen_width / 2 - 50, _screen_height / 2 - 100, 20, BLACK);
+    DrawText("Game Over", _window->first / 2 - 50, _window->second / 2 - 100, 20, BLACK);
     displayScore();
     _restart->displayAndCheckButton();
 }
 
-void Snake::Display::displayScore()
+void Snake::DisplayManager::displayScore()
 {
     DrawText(("Score: " + std::to_string(_map->getScore())).c_str(), 100, 10, 20, BLACK);
 }
 
 // -------------------------------- display game --------------------------------
 
-void Snake::Display::displayGrass(Rectangle destRect)
+void Snake::DisplayManager::displayGrass(Rectangle destRect)
 {
     Rectangle srcRect = {0.0f, 0.0f, (float)_grass.width, (float)_grass.height};
     Vector2 origin = {0.0f, 0.0f};
@@ -121,7 +109,7 @@ void Snake::Display::displayGrass(Rectangle destRect)
     DrawTexturePro(_grass, srcRect, destRect, origin, 0.0f, WHITE);
 }
 
-void Snake::Display::displayMap()
+void Snake::DisplayManager::displayMap()
 {
     float square_width = _window_map.width / _map->getSizeMap().first;
     float square_height = _window_map.height / _map->getSizeMap().second;
@@ -139,17 +127,17 @@ void Snake::Display::displayMap()
     }
 }
 
-void Snake::Display::displayGame()
+void Snake::DisplayManager::displayGame()
 {
     getEvent();
     if (_timer <= 0) {
         _timer = TIMER;
         handleEvent();
-    } else if (_status != Snake::Status::PAUSE) {
+    } else if (*_status != Snake::Status::PAUSE) {
         _timer--;
     }
     if (!_map->getPlayer()->isAlive())
-        _status = Snake::Status::GAME_OVER;
+        setStatus(Snake::Status::GAME_OVER);
     displayMap();
     displayScore();
     _pause->displayAndCheckButton();
@@ -157,27 +145,27 @@ void Snake::Display::displayGame()
 
 // -------------------------------- display pause --------------------------------
 
-void Snake::Display::displayPause()
+void Snake::DisplayManager::displayPause()
 {
-    DrawText("Pause", _screen_width / 2 - 50, _screen_height / 2 - 10, 20, BLACK);
+    DrawText("Pause", _window->first / 2 - 50, _window->second / 2 - 10, 20, BLACK);
     // _settings->dlisplayAndCheckButton();
     // _play->dispayAndCheckButton();
 }
 
 // -------------------------------- display loop --------------------------------
 
-void Snake::Display::displayBackground()
+void Snake::DisplayManager::displayBackground()
 {
     Rectangle srcRect = {0.0f, 0.0f, (float)_backg.width, (float)_backg.height};
-    Rectangle destRect = {0.0f, 0.0f, _screen_width, _screen_height};
+    Rectangle destRect = {0.0f, 0.0f, _window->first, _window->second};
     Vector2 origin = {0.0f, 0.0f};
 
     DrawTexturePro(_backg, srcRect, destRect, origin, 0.0f, WHITE);
 }
 
-void Snake::Display::chooseDisplay()
+void Snake::DisplayManager::chooseDisplay()
 {
-    switch (_status) {
+    switch (*_status) {
         case Snake::Status::MENU:
             _menu->display();
             break;
@@ -195,22 +183,22 @@ void Snake::Display::chooseDisplay()
             break;
         case Snake::Status::RESTART:
             _map->restart();
-            _status = Snake::Status::GAME;
+            setStatus(Snake::Status::GAME);
             break;
         default:
             break;
     }
 }
 
-void Snake::Display::display()
+void Snake::DisplayManager::display()
 {
     while (!WindowShouldClose()) {
-        setScreenHeight(GetScreenHeight());
-        setScreenWidth(GetScreenWidth());
+        _window->first = GetScreenWidth();
+        _window->second = GetScreenHeight();
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayBackground();
-        _window_map = { _screen_width - (_screen_width - 200), _screen_height - (_screen_height - 80), (_screen_width - 400), (_screen_height - 160) };
+        setWindowMap({ _window->first - (_window->first - 200), _window->second - (_window->second - 80), (_window->first - 400), (_window->second - 160) });
         chooseDisplay();
         EndDrawing();
     }

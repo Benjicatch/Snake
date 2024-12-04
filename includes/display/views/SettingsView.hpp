@@ -12,13 +12,12 @@
 #include "raylib.h"
 
 namespace Snake {
-    class SettingsView {
+    class SettingsView: public AViewDisplay {
         public:
-            SettingsView(std::pair<float&, float&> &window, Status &status);
+            SettingsView(AViewDisplay &view);
             ~SettingsView();
             void display();
         private:
             std::unique_ptr<Back> _back;
-            std::pair<float&, float&> _window;
     };
 }

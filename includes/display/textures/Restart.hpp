@@ -6,12 +6,12 @@
 */
 
 #pragma once
-#include "ADisplay.hpp"
+#include "AObjectDisplay.hpp"
 
 namespace Snake {
-    class Restart : public ADisplay {
+    class Restart : public AObjectDisplay {
         public:
-            Restart(std::pair<float&, float&> &window, Status &status);
+            Restart(AViewDisplay &view);
             ~Restart();
             void display() override;
             void displayAndCheckButton() override;

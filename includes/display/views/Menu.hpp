@@ -11,13 +11,14 @@
 #include "Settings.hpp"
 #include "Play.hpp"
 #include "raylib.h"
+#include "AViewDisplay.hpp"
 
 namespace Snake {
-    class Menu {
+    class Menu : public AViewDisplay {
         public:
-            Menu(std::pair<float&, float&> &window, Status &status);
+            Menu(AViewDisplay &view);
             ~Menu();
-            void display();
+            void display() override;
         private:
             std::unique_ptr<Settings> _settings;
             std::unique_ptr<Play> _play;

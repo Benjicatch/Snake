@@ -7,7 +7,7 @@
 
 #include "Back.hpp"
 
-Snake::Back::Back(std::pair<float&, float&> &window, Status &statue) : ADisplay(window.first, window.second, statue)
+Snake::Back::Back(AViewDisplay &view) : AObjectDisplay(view)
 {
     _object = LoadTexture("assets/back.png");
 }
@@ -19,8 +19,8 @@ Snake::Back::~Back()
 
 void Snake::Back::display()
 {
-    float width = _window.first / 9;
-    float height = _window.second / 9;
+    float width = _window->first / 9;
+    float height = _window->second / 9;
     Rectangle destRect = {0,
                           0,
                           width,
@@ -34,5 +34,5 @@ void Snake::Back::displayAndCheckButton()
 {
     display();
     if (isMouseOverButtonClicked())
-        _status = Status::MENU;
+        setStatus(Status::MENU);
 }

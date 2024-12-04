@@ -6,11 +6,11 @@
 */
 
 #include "raylib.h"
-#include "Display.hpp"
+#include "DisplayManager.hpp"
 
 int main(void)
 {
-    Snake::Display display(20, 10);
+    Snake::DisplayManager display(20, 10);
 
     try {
         display.display();

@@ -6,12 +6,12 @@
 */
 
 #pragma once
-#include "ADisplay.hpp"
+#include "AObjectDisplay.hpp"
 
 namespace Snake {
-    class Settings : public ADisplay {
+    class Settings : public AObjectDisplay {
         public:
-            Settings(std::pair<float&, float&> &window, Status &status);
+            Settings(AViewDisplay &view);
             ~Settings();
             void display() override;
             void displayAndCheckButton() override;
