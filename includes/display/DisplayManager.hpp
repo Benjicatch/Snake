@@ -12,6 +12,7 @@
 #include "SettingsView.hpp"
 #include "PauseView.hpp"
 #include "GameView.hpp"
+#include "GameOverView.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -24,18 +25,14 @@ namespace Snake {
             DisplayManager(int x, int y);
             ~DisplayManager();
             void display();
-            void displayGameOver();
-            void displayPause();
             void displayBackground();
             void chooseDisplay();
         private:
-            int _timer;
-            std::unique_ptr<Pause> _pause;
             std::unique_ptr<SettingsView> _settings;
             std::unique_ptr<Menu> _menu;
             std::unique_ptr<Restart> _restart;
             std::unique_ptr<PauseView> _pauseView;
             std::unique_ptr<GameView> _gameView;
-            std::deque<Direction> _directions = { Direction::LEFT };
+            std::unique_ptr<GameOverView> _gameOverView;
     };
 }

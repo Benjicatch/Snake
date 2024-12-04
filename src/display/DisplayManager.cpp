@@ -7,40 +7,25 @@
 // setWindow
 #include "DisplayManager.hpp"
 
-Snake::DisplayManager::DisplayManager(int x, int y) : _timer(TIMER), AViewDisplay(Snake::Status::MENU)
+Snake::DisplayManager::DisplayManager(int x, int y) : AViewDisplay(Snake::Status::MENU)
 {
     InitWindow(_window->first, _window->second, "Snake");
     _map = std::make_shared<Map>(x, y);
     SetTargetFPS(FPS);
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");
-    _pause = std::make_unique<Pause>(dynamic_cast<AViewDisplay&>(*this));
     _settings = std::make_unique<SettingsView>(dynamic_cast<AViewDisplay&>(*this));
     _menu = std::make_unique<Menu>(dynamic_cast<AViewDisplay&>(*this));
     _restart = std::make_unique<Restart>(dynamic_cast<AViewDisplay&>(*this));
     _pauseView = std::make_unique<PauseView>(dynamic_cast<AViewDisplay&>(*this));
     _gameView = std::make_unique<GameView>(dynamic_cast<AViewDisplay&>(*this));
+    _gameOverView = std::make_unique<GameOverView>(dynamic_cast<AViewDisplay&>(*this));
 }
 
 Snake::DisplayManager::~DisplayManager()
 {
     UnloadTexture(_backg);
     CloseWindow();
-}
-
-void Snake::DisplayManager::displayGameOver()
-{
-    DrawText("Game Over", _window->first / 2 - 50, _window->second / 2 - 100, 20, BLACK);
-    _restart->displayAndCheckButton();
-}
-
-// -------------------------------- display pause --------------------------------
-
-void Snake::DisplayManager::displayPause()
-{
-    DrawText("Pause", _window->first / 2 - 50, _window->second / 2 - 10, 20, BLACK);
-    // _settings->dlisplayAndCheckButton();
-    // _play->dispayAndCheckButton();
 }
 
 void Snake::DisplayManager::displayBackground()
@@ -68,7 +53,7 @@ void Snake::DisplayManager::chooseDisplay()
             _pauseView->display();
             break;
         case Snake::Status::GAME_OVER:
-            displayGameOver();
+            _gameOverView->display();
             break;
         case Snake::Status::RESTART:
             _map->restart();
