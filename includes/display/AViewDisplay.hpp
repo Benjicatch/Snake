@@ -23,7 +23,6 @@ namespace Snake {
             void setStatus(const Status &status);
             const std::shared_ptr<Map> &getMap() const { return _map; }
             const Rectangle &getWindowMap() const { return _window_map; }
-            const std::shared_ptr<Vector2> &getMousePoint() const { return _mousePoint; }
             const std::shared_ptr<std::pair<float, float>> &getWindow() const { return _window; }
             void setMap(const std::shared_ptr<Map> &map) { _map = map; }
             void setWindowMap(const Rectangle &window_map) { _window_map = window_map; }
@@ -31,8 +30,6 @@ namespace Snake {
             std::shared_ptr<std::pair<float, float>> _window;
             std::shared_ptr<Status> _status;
             Rectangle _window_map;
-            Texture2D _object;
-            std::shared_ptr<Vector2> _mousePoint;
             std::shared_ptr<Map> _map;
             Texture2D _backg;
     };
