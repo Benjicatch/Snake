@@ -19,12 +19,11 @@ Snake::Pause::~Pause()
 
 void Snake::Pause::display()
 {
-    float width = _window->first / 9;
-    float height = _window->second / 9;
+    float squareSize = std::min(_window->first, _window->second) / 5;
     Rectangle destRect = {_window->first - (_window->first/ 9),
                           0,
-                          width,
-                          height};
+                          squareSize,
+                          squareSize};
     _btnBounds = destRect;
 
     displayObject(destRect);

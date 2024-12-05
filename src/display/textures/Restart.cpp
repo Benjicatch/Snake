@@ -19,12 +19,11 @@ Snake::Restart::~Restart()
 
 void Snake::Restart::display()
 {
-    float width = _window->first / 9;
-    float height = _window->second / 9;
-    Rectangle destRect = {_window->first / 2 - (width / 2),
-                          _window->second / 2 - (height / 2),
-                          width,
-                          height};
+    float squareSize = std::min(_window->first, _window->second) / 5;
+    Rectangle destRect = {_window->first / 2 - (squareSize / 2),
+                          _window->second / 2 - (squareSize / 2),
+                          squareSize,
+                          squareSize};
     _btnBounds = destRect;
 
     displayObject(destRect);

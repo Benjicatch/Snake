@@ -19,10 +19,11 @@ Snake::Settings::~Settings()
 
 void Snake::Settings::display()
 {
-    Rectangle destRect = {_window->first - (_window->first/ 9),
+    float squareSize = std::min(_window->first, _window->second) / 5;
+    Rectangle destRect = {_window->first - (_window->first / 9),
                           0.0f,
-                          _window->first / 9,
-                          _window->second / 9};
+                          squareSize,
+                          squareSize};
     _btnBounds = destRect;
 
     displayObject(destRect);
