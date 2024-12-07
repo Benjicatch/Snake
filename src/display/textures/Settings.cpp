@@ -32,6 +32,6 @@ void Snake::Settings::display()
 void Snake::Settings::displayAndCheckButton()
 {
     display();
-    if (isMouseOverButtonClicked())
+    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED)
         setStatus(Snake::Status::SETTINGS);
 }

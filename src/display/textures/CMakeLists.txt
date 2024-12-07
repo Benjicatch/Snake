@@ -11,6 +11,8 @@ set(SRC
     ${SRCROOT}/Back.cpp
     ${INCROOT}/Restart.hpp
     ${SRCROOT}/Restart.cpp
+    ${INCROOT}/InputBox.hpp
+    ${SRCROOT}/InputBox.cpp
 )
 add_library(textures STATIC ${SRC})
 target_link_libraries(textures PRIVATE raylib)

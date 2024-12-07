@@ -18,7 +18,7 @@ namespace Snake {
             AObjectDisplay(AViewDisplay &view);
             ~AObjectDisplay() = default;
             virtual void display() = 0;
-            bool isMouseOverButtonClicked();
+            MouseState isMouseOverButtonClicked();
             void displayObject(Rectangle destRect);
             virtual void displayAndCheckButton() = 0;
         protected:

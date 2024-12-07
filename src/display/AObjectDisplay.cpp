@@ -19,11 +19,16 @@ void Snake::AObjectDisplay::displayObject(Rectangle destRect)
     DrawTexturePro(_object, srcRect, destRect, origin, 0.0f, WHITE);
 }
 
-bool Snake::AObjectDisplay::isMouseOverButtonClicked()
+Snake::MouseState Snake::AObjectDisplay::isMouseOverButtonClicked()
 {
     _mousePoint = GetMousePosition();
-    if (CheckCollisionPointRec(_mousePoint, _btnBounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        return true;
+
+    if (CheckCollisionPointRec(_mousePoint, _btnBounds)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            return MOUSE_HOVER_PRESSED;
+        return MOUSE_HOVER;
     }
-    return false;
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        return MOUSE_IDLE_PRESSED;
+    return MOUSE_IDLE;
 }

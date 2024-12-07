@@ -32,6 +32,6 @@ void Snake::Pause::display()
 void Snake::Pause::displayAndCheckButton()
 {
     display();
-    if (isMouseOverButtonClicked())
+    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED)
         setStatus(Snake::Status::PAUSE);
 }
