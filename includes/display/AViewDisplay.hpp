@@ -26,11 +26,14 @@ namespace Snake {
             const std::shared_ptr<std::pair<float, float>> &getWindow() const { return _window; }
             void setMap(const std::shared_ptr<Map> &map) { _map = map; }
             void setWindowMap(const Rectangle &window_map) { _window_map = window_map; }
+            const int &getKey() const { return *_key; }
+            void setKey(const int &key) { *_key = key; }
         protected:
             std::shared_ptr<std::pair<float, float>> _window;
             std::shared_ptr<Status> _status;
             Rectangle _window_map;
             std::shared_ptr<Map> _map;
             Texture2D _backg;
+            std::shared_ptr<int> _key;
     };
 }

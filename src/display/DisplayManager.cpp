@@ -69,6 +69,7 @@ void Snake::DisplayManager::display()
     while (!WindowShouldClose()) {
         _window->first = GetScreenWidth();
         _window->second = GetScreenHeight();
+        setKey(GetKeyPressed());
         BeginDrawing();
         ClearBackground(RAYWHITE);
         displayBackground();

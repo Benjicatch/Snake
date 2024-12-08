@@ -27,6 +27,5 @@ namespace Snake {
             int _maxInputChars;
             float _y;
             bool _isClicked = false;
-            int _key = 0;
     };
 }

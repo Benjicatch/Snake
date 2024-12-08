@@ -40,17 +40,17 @@ void Snake::InputBox::display()
 void Snake::InputBox::displayAndCheckButton()
 {
     auto textSize = MeasureText(_text.c_str(), _fontSize);
+    int key = getKey();
 
     display();
     checkClicked();
     if (_isClicked) {
-        _key = GetKeyPressed();
         DrawText("_", _rec.x + 10 + textSize, _rec.y + _rec.height / 2 - _fontSize / 2, _fontSize, BLACK);
-        if (_key == KEY_BACKSPACE && _text.size() > 0)
+        if (key == KEY_BACKSPACE && _text.size() > 0)
             _text.pop_back();
         else if (_text.size() < _maxInputChars) {
-            if (_key != 0 && _key != KEY_BACKSPACE)
-                _text.push_back(_key);
+            if (key != 0 && key != KEY_BACKSPACE)
+                _text.push_back(key);
         }
     } else if (_text.empty() && !_isClicked)
         DrawText(_textShadow.c_str(), _rec.x + 10, _rec.y + _rec.height / 2 - _fontSize / 2, _fontSize, GRAY);

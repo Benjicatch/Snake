@@ -60,7 +60,7 @@ void Snake::GameView::handleEvent()
 
 void Snake::GameView::getEvent()
 {
-    auto event = GetKeyPressed();
+    auto event = getKey();
     if (IsKeyPressed(KEY_ESCAPE)) {
         CloseWindow();
     }
