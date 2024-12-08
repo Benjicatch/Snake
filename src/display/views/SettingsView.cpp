@@ -21,8 +21,8 @@ Snake::SettingsView::~SettingsView()
 
 void Snake::SettingsView::display()
 {
-    _back->displayAndCheckButton();
     DrawText("Settings", _window->first / 2 - 50, _window->second / 2 - 10, 20, BLACK);
     _width->displayAndCheckButton();
     _height->displayAndCheckButton();
+    _back->displayAndCheckButton();
 }

@@ -48,7 +48,8 @@ void Snake::InputBox::displayAndCheckButton()
         DrawText("_", _rec.x + 10 + textSize, _rec.y + _rec.height / 2 - _fontSize / 2, _fontSize, BLACK);
         if (key == KEY_BACKSPACE && _text.size() > 0)
             _text.pop_back();
-        else if (_text.size() < _maxInputChars) {
+        else if (_text.size() < _maxInputChars && (key >= KEY_ZERO && key <= KEY_NINE)) {
+            std::cout << key << std::endl;
             if (key != 0 && key != KEY_BACKSPACE)
                 _text.push_back(key);
         }
