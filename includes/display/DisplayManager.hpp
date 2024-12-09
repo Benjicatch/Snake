@@ -22,7 +22,7 @@ namespace Snake {
 
     class DisplayManager : public AViewDisplay {
         public:
-            DisplayManager(int x, int y);
+            DisplayManager();
             ~DisplayManager();
             void display();
             void displayBackground();

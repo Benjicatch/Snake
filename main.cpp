@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    Snake::DisplayManager display(20, 10);
+    Snake::DisplayManager display;
 
     try {
         display.display();

@@ -7,10 +7,10 @@
 // setWindow
 #include "DisplayManager.hpp"
 
-Snake::DisplayManager::DisplayManager(int x, int y) : AViewDisplay(Snake::Status::MENU)
+Snake::DisplayManager::DisplayManager() : AViewDisplay(Snake::Status::MENU)
 {
     InitWindow(_window->first, _window->second, "Snake");
-    _map = std::make_shared<Map>(x, y);
+    _map = std::make_shared<Map>(4, 4);
     SetTargetFPS(FPS);
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     _backg = LoadTexture("assets/background.png");

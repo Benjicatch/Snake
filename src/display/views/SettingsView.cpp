@@ -27,7 +27,8 @@ void Snake::SettingsView::display()
     _width->displayAndCheckButton();
     _height->displayAndCheckButton();
     back = _back->displayAndCheckButton();
-    if (_width->getText().size() > 0 && _height->getText().size() > 0) {
+    if (_width->getText().size() > 0 && _height->getText().size() > 0 &&
+        std::stoi(_width->getText()) >= 5 && std::stoi(_height->getText()) >= 5) {
         _goBack = true;
     }
     if (_goBack == true && back == true) {

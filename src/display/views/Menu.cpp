@@ -19,6 +19,11 @@ Snake::Menu::~Menu()
 
 void Snake::Menu::display()
 {
+    bool canplay = true;
+
     _settings->displayAndCheckButton();
-    _play->displayAndCheckButton();
+    canplay = _play->displayAndCheckButton();
+    if (canplay && (_map->getSizeMap().first < 5 || _map->getSizeMap().second < 5)) {
+        setStatus(Status::SETTINGS);
+    }
 }
