@@ -14,6 +14,6 @@ namespace Snake {
             Restart(AViewDisplay &view);
             ~Restart();
             void display() override;
-            void displayAndCheckButton() override;
+            bool displayAndCheckButton() override;
     };
 }

@@ -29,9 +29,12 @@ void Snake::Play::display()
     displayObject(destRect);
 }
 
-void Snake::Play::displayAndCheckButton()
+bool Snake::Play::displayAndCheckButton()
 {
     display();
-    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED)
+    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED) {
         setStatus(Snake::Status::GAME);
+        return true;
+    }
+    return false;
 }

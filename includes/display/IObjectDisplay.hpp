@@ -23,6 +23,6 @@ namespace Snake {
             virtual void display() = 0;
             virtual MouseState isMouseOverButtonClicked() = 0;
             virtual void displayObject(Rectangle destRect) = 0;
-            virtual void displayAndCheckButton() = 0;
+            virtual bool displayAndCheckButton() = 0;
     };
 }

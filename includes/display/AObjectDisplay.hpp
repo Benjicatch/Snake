@@ -20,7 +20,7 @@ namespace Snake {
             virtual void display() = 0;
             MouseState isMouseOverButtonClicked();
             void displayObject(Rectangle destRect);
-            virtual void displayAndCheckButton() = 0;
+            virtual bool displayAndCheckButton() = 0;
         protected:
             Texture2D _object;
             Vector2 _mousePoint;

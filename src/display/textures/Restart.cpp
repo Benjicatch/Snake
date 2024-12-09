@@ -29,10 +29,12 @@ void Snake::Restart::display()
     displayObject(destRect);
 }
 
-void Snake::Restart::displayAndCheckButton()
+bool Snake::Restart::displayAndCheckButton()
 {
     display();
     if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED) {
         setStatus(Snake::Status::RESTART);
+        return true;
     }
+    return false;
 }

@@ -29,9 +29,12 @@ void Snake::Back::display()
     displayObject(destRect);
 }
 
-void Snake::Back::displayAndCheckButton()
+bool Snake::Back::displayAndCheckButton()
 {
     display();
-    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED)
+    if (isMouseOverButtonClicked() == MOUSE_HOVER_PRESSED) {
         setStatus(Status::MENU);
+        return true;
+    }
+    return false;
 }

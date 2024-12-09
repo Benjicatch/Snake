@@ -99,7 +99,6 @@ void Snake::GameView::displayMap()
 
     for (int i = 0; i < _map->getSizeMap().first; i++) {
         for (int j = 0; j < _map->getSizeMap().second; j++) {
-            std::cout << "i: " << i << " j: " << j << std::endl;
             displayGrass({ _window_map.x + i * square_width,
                            _window_map.y + j * square_height,
                            square_width,
@@ -115,6 +114,5 @@ void Snake::GameView::displayGrass(Rectangle destRect)
     Rectangle srcRect = {0.0f, 0.0f, (float)_grass.width, (float)_grass.height};
     Vector2 origin = {0.0f, 0.0f};
 
-    std::cout << "destRect.x: " << destRect.x << " destRect.y: " << destRect.y << std::endl;
     DrawTexturePro(_grass, srcRect, destRect, origin, 0.0f, WHITE);
 }

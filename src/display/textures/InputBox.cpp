@@ -37,7 +37,7 @@ void Snake::InputBox::display()
     DrawText(_text.c_str(), _rec.x + 10, _rec.y + _rec.height / 2 - _fontSize / 2, _fontSize, BLACK);
 }
 
-void Snake::InputBox::displayAndCheckButton()
+bool Snake::InputBox::displayAndCheckButton()
 {
     auto textSize = MeasureText(_text.c_str(), _fontSize);
     int key = getKey();
@@ -53,8 +53,10 @@ void Snake::InputBox::displayAndCheckButton()
             if (key != 0 && key != KEY_BACKSPACE)
                 _text.push_back(key);
         }
+        return true;
     } else if (_text.empty() && !_isClicked)
         DrawText(_textShadow.c_str(), _rec.x + 10, _rec.y + _rec.height / 2 - _fontSize / 2, _fontSize, GRAY);
+    return false;
 }
 
 void Snake::InputBox::checkClicked()

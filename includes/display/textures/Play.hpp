@@ -14,6 +14,6 @@ namespace Snake {
             Play(AViewDisplay &view);
             ~Play();
             void display() override;
-            void displayAndCheckButton() override;
+            bool displayAndCheckButton() override;
     };
 }

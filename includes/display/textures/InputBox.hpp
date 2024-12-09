@@ -17,7 +17,8 @@ namespace Snake {
             InputBox(AViewDisplay &view, Rectangle rec, float y, const std::string text, int fontSize, int maxInputChars);
             ~InputBox();
             void display() override;
-            void displayAndCheckButton() override;
+            bool displayAndCheckButton() override;
+            const std::string& getText() const { return _text; }
         private:
             void checkClicked();
             Rectangle _rec;
