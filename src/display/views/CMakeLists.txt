@@ -11,6 +11,8 @@ set(SRC
     ${SRCROOT}/GameView.cpp
     ${INCROOT}/GameOverView.hpp
     ${SRCROOT}/GameOverView.cpp
+    ${INCROOT}/WinningView.hpp
+    ${SRCROOT}/WinningView.cpp
 )
 add_library(views STATIC ${SRC})
 target_link_libraries(views PRIVATE raylib map player)

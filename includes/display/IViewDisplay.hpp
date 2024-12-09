@@ -21,7 +21,8 @@ namespace Snake {
         SETTINGS,
         PAUSE,
         GAME_OVER,
-        RESTART
+        RESTART,
+        WINNING,
     };
 
     class IViewDisplay {

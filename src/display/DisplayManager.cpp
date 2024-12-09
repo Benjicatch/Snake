@@ -20,6 +20,7 @@ Snake::DisplayManager::DisplayManager() : AViewDisplay(Snake::Status::MENU)
     _pauseView = std::make_unique<PauseView>(dynamic_cast<AViewDisplay&>(*this));
     _gameView = std::make_unique<GameView>(dynamic_cast<AViewDisplay&>(*this));
     _gameOverView = std::make_unique<GameOverView>(dynamic_cast<AViewDisplay&>(*this));
+    _winningView = std::make_unique<WinningView>(dynamic_cast<AViewDisplay&>(*this));
 }
 
 Snake::DisplayManager::~DisplayManager()
@@ -54,6 +55,9 @@ void Snake::DisplayManager::chooseDisplay()
             break;
         case Snake::Status::GAME_OVER:
             _gameOverView->display();
+            break;
+        case Snake::Status::WINNING:
+            _winningView->display();
             break;
         case Snake::Status::RESTART:
             _map->restart();

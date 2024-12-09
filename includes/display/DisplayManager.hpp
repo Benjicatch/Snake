@@ -13,6 +13,7 @@
 #include "PauseView.hpp"
 #include "GameView.hpp"
 #include "GameOverView.hpp"
+#include "WinningView.hpp"
 #include "raylib.h"
 
 namespace Snake {
@@ -34,5 +35,6 @@ namespace Snake {
             std::unique_ptr<PauseView> _pauseView;
             std::unique_ptr<GameView> _gameView;
             std::unique_ptr<GameOverView> _gameOverView;
+            std::unique_ptr<WinningView> _winningView;
     };
 }

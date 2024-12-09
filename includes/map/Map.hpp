@@ -26,17 +26,18 @@ namespace Snake {
             const std::vector<std::vector<std::shared_ptr<ICase>>>& getMap() const;
             const std::shared_ptr<Snake::Apple>& getApple() const; // Move unique pointer
             const std::shared_ptr<Snake::Player>& getPlayer() const; // Move unique pointer
-            void checkSetApplePosition();
             bool setPlayerPosition(Direction direction);
             const int getScore() const;
             const Direction& getLastDirection() const;
+            const bool& getWin() const;
     private:
-        void setApplePosition();
+        bool setApplePosition();
         int _score;
         Direction _last_direction;
         std::pair<int, int> _size_map;
         std::vector<std::vector<std::shared_ptr<ICase>>> _map;
         std::shared_ptr<Apple> _apple;
         std::shared_ptr<Player> _player;
+        bool _win = false;
     };
 }

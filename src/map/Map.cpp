@@ -79,14 +79,20 @@ const std::shared_ptr<Snake::Player>& Snake::Map::getPlayer() const
     return _player;
 }
 
-void Snake::Map::setApplePosition()
+bool Snake::Map::setApplePosition()
 {
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
-    int index = rand() % free_slots.size();
+    int index = 0;
 
+    if (free_slots.size() <= _size_map.first * _size_map.second / 2) {
+        _win = true;
+        return false;
+    }
+    index = rand() % free_slots.size();
     _score += 1;
     _apple->setPosition(free_slots[index]);
     _map[free_slots[index].first][free_slots[index].second] = _apple;
+    return true;
 }
 
 bool Snake::Map::setPlayerPosition(Direction direction)
@@ -145,16 +151,9 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     _player->setPosition(new_position);
     _map[new_position.first][new_position.second] = _player;
     if (eat_apple) {
-        checkSetApplePosition();
-    }
-    return true;
-}
-
-void Snake::Map::checkSetApplePosition()
-{
-    if (_map[_apple->getPosition().first][_apple->getPosition().second]->getType() != Snake::CaseType::APPLE) {
         setApplePosition();
     }
+    return true;
 }
 
 const int Snake::Map::getScore() const
@@ -165,4 +164,9 @@ const int Snake::Map::getScore() const
 const Snake::Direction& Snake::Map::getLastDirection() const
 {
     return _last_direction;
+}
+
+const bool& Snake::Map::getWin() const
+{
+    return _win;
 }
