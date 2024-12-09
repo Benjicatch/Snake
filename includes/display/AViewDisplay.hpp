@@ -28,6 +28,7 @@ namespace Snake {
             void setWindowMap(const Rectangle &window_map) { _window_map = window_map; }
             const int &getKey() const { return *_key; }
             void setKey(const int &key) { *_key = key; }
+            void drawText(const std::string &text, int offsetX, int offsetY, Color color);
         protected:
             std::shared_ptr<std::pair<float, float>> _window;
             std::shared_ptr<Status> _status;

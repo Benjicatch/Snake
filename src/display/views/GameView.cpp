@@ -33,7 +33,7 @@ void Snake::GameView::display()
         setStatus(Snake::Status::GAME_OVER);
     displayMap();
     _pause->displayAndCheckButton();
-    DrawText(("Score: " + std::to_string(_map->getScore())).c_str(), 100, 10, 20, BLACK);
+    drawText(("Score: " + std::to_string(_map->getScore())).c_str(), -_window->first / 2.4, -_window->second / 2.2, BLACK);
 }
 
 void Snake::GameView::handleEvent()
@@ -61,9 +61,6 @@ void Snake::GameView::handleEvent()
 void Snake::GameView::getEvent()
 {
     auto event = getKey();
-    if (IsKeyPressed(KEY_ESCAPE)) {
-        CloseWindow();
-    }
     switch (event) {
         case KEY_UP:
         case KEY_W:
