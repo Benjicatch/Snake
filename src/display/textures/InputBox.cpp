@@ -29,13 +29,13 @@ Snake::InputBox::~InputBox()
 void Snake::InputBox::display()
 {
     // Calculate font size adaptively based on window height
-    int fontSize = _window->second / 20; // Example: 1/20th of window height
-
+    float fontSize = _window->second / 20; // Example: 1/20th of window height
+    float textWidth = MeasureText(_textShadow.c_str(), fontSize);
     // Define the text box rectangle
     Rectangle textBox = { 
         _window->first / 2 - 100 + _offsetX, 
         (_window->second / (float)1.5) + _offsetY, 
-        225, 
+        std::max(textWidth + 20, 225.0f), 
         50 
     };
 

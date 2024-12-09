@@ -11,14 +11,7 @@ Snake::Map::Map(int x, int y) : _last_direction(Direction::LEFT), _score(0)
     _size_map = {x, y};
     _map = std::vector<std::vector<std::shared_ptr<Snake::ICase>>>(x);
     srand(time(NULL));
-    this->resize(x, y);
-    _player = std::make_shared<Player>(x / 2, y / 2);
-    _apple = std::make_shared<Apple>();
-    _map[_player->getPosition().first][_player->getPosition().second] = _player;
-    for (auto body : _player->getBody()) {
-        _map[body->getPosition().first][body->getPosition().second] = body;
-    }
-    setApplePosition();
+    restart();
 }
 
 Snake::Map::~Map()
@@ -41,6 +34,7 @@ void Snake::Map::restart()
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     setApplePosition();
+    placeObstacles();
     _score = 0;
     _last_direction = Direction::LEFT;
 }
@@ -145,7 +139,9 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     case_game = _map[new_position.first][new_position.second];
-    if (case_game != nullptr && case_game->getType() == Snake::CaseType::SNAKE_BODY) {
+    if (case_game != nullptr &&
+        (case_game->getType() == Snake::CaseType::SNAKE_BODY ||
+        case_game->getType() == Snake::CaseType::OBSTACLE)) {
         _player->setAlive(false);
         return false;
     }
@@ -170,4 +166,31 @@ const Snake::Direction& Snake::Map::getLastDirection() const
 const bool& Snake::Map::getWin() const
 {
     return _win;
+}
+
+const int& Snake::Map::getObstacles() const
+{
+    return _nbObstacles;
+}
+
+void Snake::Map::setObstacles(int obstacles)
+{
+    _nbObstacles = obstacles;
+}
+
+void Snake::Map::placeObstacles()
+{
+    std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
+    int index = 0;
+
+    _obstacles.clear();
+    if (free_slots.size() < _nbObstacles)
+        return;
+    for (int i = 0; i < _nbObstacles; i++) {
+        index = rand() % free_slots.size();
+        _obstacles.push_back(std::make_shared<Obstacle>());
+        _map[free_slots[index].first][free_slots[index].second] = _obstacles[i];
+        _obstacles[i]->setPosition(free_slots[index]);
+        free_slots.erase(free_slots.begin() + index);
+    }
 }

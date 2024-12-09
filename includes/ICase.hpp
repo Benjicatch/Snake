@@ -16,7 +16,8 @@ namespace Snake {
         EMPTY,
         APPLE,
         SNAKE_BODY,
-        SNAKE_HEAD
+        SNAKE_HEAD,
+        OBSTACLE
     };
 
     enum class Direction {

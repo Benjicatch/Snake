@@ -102,8 +102,9 @@ void Snake::GameView::displayMap()
                            _window_map.y + j * square_height,
                            square_width,
                            square_height });
-            if (map[i][j] != nullptr)
+            if (map[i][j] != nullptr) {
                 map[i][j]->display(_window_map, _map->getSizeMap());
+            }
         }
     }
 }

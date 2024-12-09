@@ -22,6 +22,7 @@ namespace Snake {
             std::unique_ptr<Back> _back;
             std::unique_ptr<InputBox> _width;
             std::unique_ptr<InputBox> _height;
+            std::unique_ptr<InputBox> _obstacles;
             bool _goBack = false;
     };
 }

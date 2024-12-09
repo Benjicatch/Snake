@@ -3,6 +3,8 @@ set(SRCROOT ${CMAKE_SOURCE_DIR}/src/map/objects)
 set(SRC
     ${INCROOT}/Apple.hpp
     ${SRCROOT}/Apple.cpp
+    ${INCROOT}/Obstacle.hpp
+    ${SRCROOT}/Obstacle.cpp
 )
 add_library(objects STATIC ${SRC})
 target_link_libraries(objects PRIVATE raylib src)

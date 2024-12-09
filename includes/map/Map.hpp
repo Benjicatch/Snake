@@ -11,6 +11,7 @@
 #include <memory>
 #include "Apple.hpp"
 #include "Player.hpp"
+#include "Obstacle.hpp"
 
 namespace Snake {
 
@@ -30,6 +31,9 @@ namespace Snake {
             const int getScore() const;
             const Direction& getLastDirection() const;
             const bool& getWin() const;
+            const int& getObstacles() const;
+            void setObstacles(int obstacles);
+            void placeObstacles();
     private:
         bool setApplePosition();
         int _score;
@@ -39,5 +43,7 @@ namespace Snake {
         std::shared_ptr<Apple> _apple;
         std::shared_ptr<Player> _player;
         bool _win = false;
+        int _nbObstacles = 0;
+        std::deque<std::shared_ptr<Obstacle>> _obstacles;
     };
 }
