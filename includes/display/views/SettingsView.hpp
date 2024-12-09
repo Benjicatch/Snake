@@ -19,6 +19,7 @@ namespace Snake {
             ~SettingsView();
             void display();
         private:
+            void drawText(const std::string &text, int offsetX, int offsetY, Color color);
             std::unique_ptr<Back> _back;
             std::unique_ptr<InputBox> _width;
             std::unique_ptr<InputBox> _height;
