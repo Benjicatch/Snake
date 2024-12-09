@@ -11,8 +11,8 @@ Snake::SettingsView::SettingsView(AViewDisplay &view) : AViewDisplay(view)
 {
     Rectangle textBox = { _window->first / 2 - 100, _window->second / (float)1.5, 225, 50 };
     _back = std::make_unique<Back>(view);
-    _width = std::make_unique<InputBox>(view, textBox, 0, "Width", 3);
-    _height = std::make_unique<InputBox>(view, textBox, 60, "Height", 3);
+    _width = std::make_unique<InputBox>(view, textBox, 0, 0, "Width", 3);
+    _height = std::make_unique<InputBox>(view, textBox, 0, 60, "Height", 3);
 }
 
 Snake::SettingsView::~SettingsView()
