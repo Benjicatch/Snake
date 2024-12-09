@@ -21,8 +21,23 @@ Snake::SettingsView::~SettingsView()
 
 void Snake::SettingsView::display()
 {
+    bool back = false;
+
     DrawText("Settings", _window->first / 2 - 50, _window->second / 2 - 10, 20, BLACK);
     _width->displayAndCheckButton();
     _height->displayAndCheckButton();
-    _back->displayAndCheckButton();
+    back = _back->displayAndCheckButton();
+    if (_width->getText().size() > 0 && _height->getText().size() > 0) {
+        _goBack = true;
+    }
+    if (_goBack == true && back == true) {
+        _map->resize(std::stoi(_width->getText()), std::stoi(_height->getText()));
+        _map->restart();
+    }
+    if (!_goBack || (_width->getText().size() == 0 || _height->getText().size() == 0)) {
+        _goBack = false;
+        if (back == true)
+            setStatus(Snake::Status::SETTINGS);
+        DrawText("Please enter a valid number", _window->first / 2 - 100, _window->second / 2 + 50, 20, RED);
+    }
 }

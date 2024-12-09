@@ -31,26 +31,20 @@ Snake::Map::~Map()
 void Snake::Map::resize(int x, int y)
 {
     _size_map = {x, y};
-    _map.clear();
-    _map.resize(x);
-    for (int i = 0; i < x; ++i) {
-        _map[i].resize(y);
-        for (int j = 0; j < y; ++j) {
-            _map[i][j] = nullptr;
-        }
-    }
+    _map = std::vector<std::vector<std::shared_ptr<ICase>>>(x, std::vector<std::shared_ptr<ICase>>(y, nullptr));
 }
 
 void Snake::Map::restart()
 {
     resize(_size_map.first, _size_map.second);
-    _player->restart();
+    _player = std::make_shared<Player>(_size_map.first / 2, _size_map.second / 2);
+    _apple = std::make_shared<Apple>();
     _map[_player->getPosition().first][_player->getPosition().second] = _player;
     for (auto body : _player->getBody()) {
         _map[body->getPosition().first][body->getPosition().second] = body;
     }
     setApplePosition();
-    _score = 1;
+    _score = 0;
     _last_direction = Direction::LEFT;
 }
 
