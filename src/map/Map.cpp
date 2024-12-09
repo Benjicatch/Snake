@@ -84,6 +84,7 @@ bool Snake::Map::setApplePosition()
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = 0;
 
+    // Check if the player won
     if (free_slots.size() <= _size_map.first * _size_map.second / 2) {
         _win = true;
         return false;

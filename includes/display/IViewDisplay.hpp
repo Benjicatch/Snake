@@ -13,7 +13,7 @@
 namespace Snake {
 
     #define FPS 60
-    #define TIMER 10
+    #define TIMER 15
 
     enum Status {
         MENU,

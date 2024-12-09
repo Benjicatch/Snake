@@ -19,7 +19,6 @@
 namespace Snake {
 
     #define FPS 60
-    #define TIMER 10
 
     class DisplayManager : public AViewDisplay {
         public:

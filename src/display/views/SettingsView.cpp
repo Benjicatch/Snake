@@ -31,7 +31,9 @@ void Snake::SettingsView::display()
         std::stoi(_width->getText()) >= 5 && std::stoi(_height->getText()) >= 5) {
         _goBack = true;
     }
-    if (_goBack == true && back == true) {
+    if (_goBack == true && back == true &&
+        _map->getSizeMap().first != std::stoi(_width->getText()) &&
+        _map->getSizeMap().second != std::stoi(_height->getText())) {
         _map->resize(std::stoi(_width->getText()), std::stoi(_height->getText()));
         _map->restart();
     }
