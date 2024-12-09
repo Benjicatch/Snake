@@ -24,15 +24,14 @@ void Snake::SettingsView::display()
 {
     bool back = false;
 
+    _goBack = true;
     drawText("Settings", 0, -_window->second / 8, BLACK);
     _width->displayAndCheckButton();
     _height->displayAndCheckButton();
     _obstacles->displayAndCheckButton();
     back = _back->displayAndCheckButton();
-    if (_width->getText().size() > 0 && _height->getText().size() > 0 &&
-        std::stoi(_width->getText()) >= 5 && std::stoi(_height->getText()) >= 5) {
-        _goBack = true;
-    }
+    if (checkWidthHeight() == false || checkObstacles() == false)
+        _goBack = false;
     if (_goBack == true && back == true &&
         (_map->getSizeMap().first != std::stoi(_width->getText()) ||
         _map->getSizeMap().second != std::stoi(_height->getText()) ||
@@ -41,10 +40,42 @@ void Snake::SettingsView::display()
         _map->resize(std::stoi(_width->getText()), std::stoi(_height->getText()));
         _map->restart();
     }
-    if (!_goBack || (_width->getText().size() == 0 || _height->getText().size() == 0)) {
+    if (!_goBack) {
         _goBack = false;
         if (back == true)
             setStatus(Snake::Status::SETTINGS);
-        drawText("Please enter the width and height", 0, _window->second / 12, RED);
     }
+}
+
+bool Snake::SettingsView::checkObstacles()
+{
+    int witdh = _width->getText().empty() ? 0 : std::stoi(_width->getText());
+    int height = _height->getText().empty() ? 0 : std::stoi(_height->getText());
+
+    if (_obstacles->getText().size() > 0 && std::stoi(_obstacles->getText()) < 0) {
+        drawText("Obstacles must be positive", 0, _window->second / 12, RED);
+        return false;
+    }
+    if (_obstacles->getText().size() > 0 && std::stoi(_obstacles->getText()) > (witdh * height) - 2) {
+        drawText("Obstacles must be less than the size of the map", 0, _window->second / 12, RED);
+        return false;
+    }
+    return true;
+}
+
+bool Snake::SettingsView::checkWidthHeight()
+{
+    if (_width->getText().size() == 0 || _height->getText().size() == 0) {
+        drawText("Width and Height must be filled", 0, _window->second / 12, RED);
+        return false;
+    }
+    if (_width->getText().size() > 0 && std::stoi(_width->getText()) < 5) {
+        drawText("Width must be greater than 5", 0, _window->second / 30, RED);
+        return false;
+    }
+    if (_height->getText().size() > 0 && std::stoi(_height->getText()) < 5) {
+        drawText("Height must be greater than 5", 0, _window->second / 30, RED);
+        return false;
+    }
+    return true;
 }

@@ -175,7 +175,10 @@ const int& Snake::Map::getObstacles() const
 
 void Snake::Map::setObstacles(int obstacles)
 {
-    _nbObstacles = obstacles;
+    if (obstacles < 0)
+        _nbObstacles = 0;
+    else
+        _nbObstacles = obstacles;
 }
 
 void Snake::Map::placeObstacles()

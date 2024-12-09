@@ -19,6 +19,8 @@ namespace Snake {
             ~SettingsView();
             void display();
         private:
+            bool checkObstacles();
+            bool checkWidthHeight();
             std::unique_ptr<Back> _back;
             std::unique_ptr<InputBox> _width;
             std::unique_ptr<InputBox> _height;
