@@ -25,6 +25,7 @@ namespace Snake {
             std::unique_ptr<InputBox> _width;
             std::unique_ptr<InputBox> _height;
             std::unique_ptr<InputBox> _obstacles;
+            std::unique_ptr<InputBox> _mirror;
             bool _goBack = false;
     };
 }
