@@ -3,6 +3,8 @@ set(SRCROOT ${CMAKE_SOURCE_DIR}/src/game)
 set(SRC
     ${INCROOT}/ACase.hpp
     ${SRCROOT}/ACase.cpp
+    ${INCROOT}/AGame.hpp
+    ${SRCROOT}/AGame.cpp
 )
 add_library(game STATIC ${SRC})
 target_link_libraries(game PRIVATE raylib)

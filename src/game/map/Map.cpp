@@ -6,7 +6,7 @@
 */
 #include "Map.hpp"
 
-Snake::Map::Map(int x, int y) : _last_direction(Direction::LEFT), _score(0)
+Snake::Map::Map(int x, int y) : _last_direction(Direction::LEFT)
 {
     _size_map = {x, y};
     _map = std::vector<std::vector<std::shared_ptr<Snake::ICase>>>(x);
@@ -35,7 +35,7 @@ void Snake::Map::restart()
     }
     setApplePosition();
     placeObstacles();
-    _score = 0;
+    setScore(0);
     _last_direction = Direction::LEFT;
 }
 
@@ -80,11 +80,11 @@ bool Snake::Map::setApplePosition()
 
     // Check if the player won
     if (free_slots.size() <= _size_map.first * _size_map.second / 2) {
-        _win = true;
+        setWin(true);
         return false;
     }
     index = rand() % free_slots.size();
-    _score += 1;
+    setScore(getScore() + 1);
     _apple->setPosition(free_slots[index]);
     _map[free_slots[index].first][free_slots[index].second] = _apple;
     return true;
@@ -149,19 +149,9 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     return true;
 }
 
-const int Snake::Map::getScore() const
-{
-    return _score;
-}
-
 const Snake::Direction& Snake::Map::getLastDirection() const
 {
     return _last_direction;
-}
-
-const bool& Snake::Map::getWin() const
-{
-    return _win;
 }
 
 const int& Snake::Map::getObstacles() const
@@ -196,14 +186,16 @@ void Snake::Map::placeObstacles()
 
 bool Snake::Map::checkMirror(std::pair<int, int> new_position)
 {
-    if (_mode == Mode::NORMAL &&
+    Mode mode = getMode();
+
+    if (mode == Mode::NORMAL &&
         (new_position.first < 0 ||
         new_position.first >= _size_map.first ||
         new_position.second < 0 ||
         new_position.second >= _size_map.second)) {
         _player->setAlive(false);
         return false;
-    } else if (_mode == Mode::MIRROR) {
+    } else if (mode == Mode::MIRROR) {
         if (new_position.first < 0)
             new_position.first = _size_map.first - 1;
         if (new_position.first >= _size_map.first)

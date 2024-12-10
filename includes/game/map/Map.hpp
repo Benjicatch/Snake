@@ -12,15 +12,11 @@
 #include "Apple.hpp"
 #include "Player.hpp"
 #include "Obstacle.hpp"
+#include "AGame.hpp"
 
 namespace Snake {
 
-    enum Mode {
-        NORMAL,
-        MIRROR
-    };
-
-    class Map {
+    class Map : public AGame {
         public:
             Map(int x, int y);
             Map(const Map &other) = delete;
@@ -33,24 +29,19 @@ namespace Snake {
             const std::shared_ptr<Snake::Apple>& getApple() const; // Move unique pointer
             const std::shared_ptr<Snake::Player>& getPlayer() const; // Move unique pointer
             bool setPlayerPosition(Direction direction);
-            const int getScore() const;
             const Direction& getLastDirection() const;
-            const bool& getWin() const;
             const int& getObstacles() const;
             void setObstacles(int obstacles);
             void placeObstacles();
-    private:
-        bool setApplePosition();
-        bool checkMirror(std::pair<int, int> new_position);
-        int _score;
-        Direction _last_direction;
-        std::pair<int, int> _size_map;
-        std::vector<std::vector<std::shared_ptr<ICase>>> _map;
-        std::shared_ptr<Apple> _apple;
-        std::shared_ptr<Player> _player;
-        bool _win = false;
-        int _nbObstacles = 0;
-        std::deque<std::shared_ptr<Obstacle>> _obstacles;
-        Mode _mode = Mode::NORMAL;
+        private:
+            bool setApplePosition();
+            bool checkMirror(std::pair<int, int> new_position);
+            Direction _last_direction;
+            std::pair<int, int> _size_map;
+            std::vector<std::vector<std::shared_ptr<ICase>>> _map;
+            std::shared_ptr<Apple> _apple;
+            std::shared_ptr<Player> _player;
+            int _nbObstacles = 0;
+            std::deque<std::shared_ptr<Obstacle>> _obstacles;
     };
 }
