@@ -26,12 +26,9 @@ set_target_properties(snake PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_D
 add_subdirectory(src)
 set(INCROOT
     ${CMAKE_SOURCE_DIR}/includes/
-    ${CMAKE_SOURCE_DIR}/includes/games/
-    ${CMAKE_SOURCE_DIR}/includes/graphics/
-    ${CMAKE_SOURCE_DIR}/includes/core/
 )
 target_include_directories(snake PUBLIC ${INCROOT})
-target_link_libraries(${PROJECT_NAME} PRIVATE src)
+target_link_libraries(${PROJECT_NAME} PRIVATE game)
 target_link_libraries(${PROJECT_NAME} PRIVATE map)
 target_link_libraries(${PROJECT_NAME} PRIVATE display)
 target_link_libraries(${PROJECT_NAME} PRIVATE objects)

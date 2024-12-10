@@ -1,5 +1,5 @@
-set(INCROOT ${CMAKE_SOURCE_DIR}/includes/map/objects)
-set(SRCROOT ${CMAKE_SOURCE_DIR}/src/map/objects)
+set(INCROOT ${CMAKE_SOURCE_DIR}/includes/game/map/objects)
+set(SRCROOT ${CMAKE_SOURCE_DIR}/src/game/map/objects)
 set(SRC
     ${INCROOT}/Apple.hpp
     ${SRCROOT}/Apple.cpp
@@ -7,8 +7,8 @@ set(SRC
     ${SRCROOT}/Obstacle.cpp
 )
 add_library(objects STATIC ${SRC})
-target_link_libraries(objects PRIVATE raylib src)
+target_link_libraries(objects PRIVATE raylib game)
 target_include_directories(objects PUBLIC
     ${INCROOT}
-    ${CMAKE_SOURCE_DIR}/includes/
+    ${CMAKE_SOURCE_DIR}/includes/game
 )

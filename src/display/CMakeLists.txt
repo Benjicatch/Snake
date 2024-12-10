@@ -14,8 +14,8 @@ add_library(display STATIC ${SRC})
 target_link_libraries(display PRIVATE raylib)
 target_include_directories(display PUBLIC
     ${INCROOT}
-    ${CMAKE_SOURCE_DIR}/includes/
-    ${CMAKE_SOURCE_DIR}/includes/map
+    ${CMAKE_SOURCE_DIR}/includes/game
+    ${CMAKE_SOURCE_DIR}/includes/game/map
 )
 target_link_libraries(display PRIVATE
     map

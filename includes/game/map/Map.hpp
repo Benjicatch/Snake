@@ -15,6 +15,11 @@
 
 namespace Snake {
 
+    enum Mode {
+        NORMAL,
+        MIRROR
+    };
+
     class Map {
         public:
             Map(int x, int y);
@@ -36,6 +41,7 @@ namespace Snake {
             void placeObstacles();
     private:
         bool setApplePosition();
+        bool checkMirror(std::pair<int, int> new_position);
         int _score;
         Direction _last_direction;
         std::pair<int, int> _size_map;
@@ -45,5 +51,6 @@ namespace Snake {
         bool _win = false;
         int _nbObstacles = 0;
         std::deque<std::shared_ptr<Obstacle>> _obstacles;
+        Mode _mode = Mode::NORMAL;
     };
 }

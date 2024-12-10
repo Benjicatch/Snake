@@ -18,10 +18,10 @@ add_library(textures STATIC ${SRC})
 target_link_libraries(textures PRIVATE raylib)
 target_include_directories(textures PUBLIC
     ${INCROOT}
-    ${CMAKE_SOURCE_DIR}/includes/
+    ${CMAKE_SOURCE_DIR}/includes/game
     ${CMAKE_SOURCE_DIR}/includes/display
-    ${CMAKE_SOURCE_DIR}/includes/map/objects
-    ${CMAKE_SOURCE_DIR}/includes/player
+    ${CMAKE_SOURCE_DIR}/includes/game/map/objects
+    ${CMAKE_SOURCE_DIR}/includes/game/map/player
 )
 target_link_libraries(textures PRIVATE
     display)

@@ -117,11 +117,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         default:
             break;
     }
-    if (new_position.first < 0 ||
-        new_position.first >= _size_map.first ||
-        new_position.second < 0 ||
-        new_position.second >= _size_map.second) {
-        _player->setAlive(false);
+    if (checkMirror(new_position) == false) {
         return false;
     }
     _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
@@ -196,4 +192,26 @@ void Snake::Map::placeObstacles()
         _obstacles[i]->setPosition(free_slots[index]);
         free_slots.erase(free_slots.begin() + index);
     }
+}
+
+bool Snake::Map::checkMirror(std::pair<int, int> new_position)
+{
+    if (_mode == Mode::NORMAL &&
+        (new_position.first < 0 ||
+        new_position.first >= _size_map.first ||
+        new_position.second < 0 ||
+        new_position.second >= _size_map.second)) {
+        _player->setAlive(false);
+        return false;
+    } else if (_mode == Mode::MIRROR) {
+        if (new_position.first < 0)
+            new_position.first = _size_map.first - 1;
+        if (new_position.first >= _size_map.first)
+            new_position.first = 0;
+        if (new_position.second < 0)
+            new_position.second = _size_map.second - 1;
+        if (new_position.second >= _size_map.second)
+            new_position.second = 0;
+    }
+    return true;
 }
