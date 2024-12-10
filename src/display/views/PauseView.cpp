@@ -23,5 +23,5 @@ void Snake::PauseView::display()
     _settings->displayAndCheckButton();
     _play->displayAndCheckButton();
     _back->displayAndCheckButton();
-    drawText(("Score: " + std::to_string(_map->getScore())).c_str(), -_window->first / 3, -_window->second / 2.5, BLACK);
+    drawText(("Score: " + std::to_string(_map->getScore())).c_str(), 15, 3, BLACK);
 }

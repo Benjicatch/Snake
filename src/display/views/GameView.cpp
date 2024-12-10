@@ -35,7 +35,7 @@ void Snake::GameView::display()
         setStatus(Snake::Status::WINNING);
     displayMap();
     _pause->displayAndCheckButton();
-    drawText(("Score: " + std::to_string(_map->getScore())).c_str(), -_window->first / 2.4, -_window->second / 2.2, BLACK);
+    drawText(("Score: " + std::to_string(_map->getScore())).c_str(), 3, 3, BLACK);
 }
 
 void Snake::GameView::handleEvent()
