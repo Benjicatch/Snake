@@ -36,18 +36,43 @@ void Snake::SettingsView::display()
 
     if (checkWidthHeight() == false || checkObstacles() == false)
         _goBack = false;
-    if (_goBack == true && back == true &&
-        (_map->getSizeMap().first != std::stoi(_width->getText()) ||
-        _map->getSizeMap().second != std::stoi(_height->getText()) ||
-        _map->getObstacles() != std::stoi(_obstacles->getText()))) {
-        _map->setObstacles(_obstacles->getText().empty() ? 0 : std::stoi(_obstacles->getText()));
-        _map->resize(std::stoi(_width->getText()), std::stoi(_height->getText()));
-        _map->restart();
+    if (_goBack == true && back == true) {
+        checkChanges();
     }
     if (!_goBack) {
         _goBack = false;
         if (back == true)
             setStatus(Snake::Status::SETTINGS);
+    }
+}
+
+void Snake::SettingsView::checkChanges()
+{
+    bool changes = false;
+    auto sizeMap = _map->getSizeMap();
+    auto mode = _map->getMode();
+
+    if (sizeMap->first != std::stoi(_width->getText()) ||
+        sizeMap->second != std::stoi(_height->getText())) {
+        changes = true;
+        _map->setSizeMap(std::stoi(_width->getText()), std::stoi(_height->getText()));
+    }
+    if ((_obstacles->getText().empty() && _map->getObstacles() != 0)) {
+        changes = true;
+        _map->setObstacles(0);
+    } else if (!_obstacles->getText().empty() && _map->getObstacles() != std::stoi(_obstacles->getText())) {
+        changes = true;
+        _map->setObstacles(std::stoi(_obstacles->getText()));
+    }
+    if (_mirror->getText().empty() && *mode != Mode::NORMAL) {
+        changes = true;
+        _map->setMode(Mode::NORMAL);
+    } else if (!_mirror->getText().empty() && *mode != Mode::MIRROR) {
+        changes = true;
+        _map->setMode(Mode::MIRROR);
+    }
+    if (changes == true) {
+        _map->restart();
     }
 }
 

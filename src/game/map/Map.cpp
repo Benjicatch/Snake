@@ -8,8 +8,7 @@
 
 Snake::Map::Map(int x, int y) : _last_direction(Direction::LEFT)
 {
-    _size_map = {x, y};
-    _map = std::vector<std::vector<std::shared_ptr<Snake::ICase>>>(x);
+    setSizeMap(x, y);
     srand(time(NULL));
     restart();
 }
@@ -18,20 +17,17 @@ Snake::Map::~Map()
 {
 }
 
-void Snake::Map::resize(int x, int y)
-{
-    _size_map = {x, y};
-    _map = std::vector<std::vector<std::shared_ptr<ICase>>>(x, std::vector<std::shared_ptr<ICase>>(y, nullptr));
-}
-
 void Snake::Map::restart()
 {
-    resize(_size_map.first, _size_map.second);
-    _player = std::make_shared<Player>(_size_map.first / 2, _size_map.second / 2);
+    auto size_map = getSizeMap();
+    auto map = getMap();
+
+    setSizeMap(size_map->first, size_map->second);
+    _player = std::make_shared<Player>(size_map->first / 2, size_map->second / 2, *this);
     _apple = std::make_shared<Apple>();
-    _map[_player->getPosition().first][_player->getPosition().second] = _player;
+    setMap(_player->getPosition().first, _player->getPosition().second, _player);
     for (auto body : _player->getBody()) {
-        _map[body->getPosition().first][body->getPosition().second] = body;
+        setMap(body->getPosition().first, body->getPosition().second, body);
     }
     setApplePosition();
     placeObstacles();
@@ -39,23 +35,14 @@ void Snake::Map::restart()
     _last_direction = Direction::LEFT;
 }
 
-std::pair<int, int> Snake::Map::getSizeMap() const
-{
-    return _size_map;
-}
-
-const std::vector<std::vector<std::shared_ptr<Snake::ICase>>>& Snake::Map::getMap() const
-{
-    return _map;
-}
-
 std::vector<std::pair<int, int>> Snake::Map::getFreeSlots() const
 {
     std::vector<std::pair<int, int>> free_slots;
+    auto map = getMap();
 
-    for (int i = 0; i < _map.size(); i++) {
-        for (int j = 0; j < _map[i].size(); j++) {
-            if (_map[i][j] == nullptr) {
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            if (map[i][j] == nullptr) {
                 free_slots.push_back({i, j});
             }
         }
@@ -77,16 +64,18 @@ bool Snake::Map::setApplePosition()
 {
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = 0;
+    auto map = getMap();
+    auto _size_map = getSizeMap();
 
     // Check if the player won
-    if (free_slots.size() <= _size_map.first * _size_map.second / 2) {
+    if (free_slots.size() <= _size_map->first * _size_map->second / 2) {
         setWin(true);
         return false;
     }
     index = rand() % free_slots.size();
     setScore(getScore() + 1);
     _apple->setPosition(free_slots[index]);
-    _map[free_slots[index].first][free_slots[index].second] = _apple;
+    setMap(free_slots[index].first, free_slots[index].second, _apple);
     return true;
 }
 
@@ -96,6 +85,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     std::shared_ptr<Snake::ICase> case_game;
     bool eat_apple = false;
     std::pair<int, int> player_position = _player->getPosition();
+    auto map = getMap();
 
     if (direction == Direction::NONE)
         direction = _last_direction;
@@ -117,14 +107,14 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         default:
             break;
     }
-    if (checkMirror(new_position) == false) {
+    new_position = checkMirror(new_position);
+    if (!_player->isAlive())
         return false;
-    }
-    _map[_player->getPosition().first][_player->getPosition().second] = nullptr;
+    setMap(_player->getPosition().first, _player->getPosition().second, nullptr);
     for (auto body : _player->getBody()) {
-        _map[body->getPosition().first][body->getPosition().second] = nullptr;
+        setMap(body->getPosition().first, body->getPosition().second, nullptr);
     }
-    case_game = _map[new_position.first][new_position.second];
+    case_game = map[new_position.first][new_position.second];
     if (case_game != nullptr && case_game->getType() == Snake::CaseType::APPLE) {
         _player->addBody(player_position.first, player_position.second);
         eat_apple = true;
@@ -132,9 +122,9 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         _player->moveBody(direction);
     }
     for (auto body : _player->getBody()) {
-        _map[body->getPosition().first][body->getPosition().second] = body;
+        setMap(body->getPosition().first, body->getPosition().second, body);
     }
-    case_game = _map[new_position.first][new_position.second];
+    case_game = map[new_position.first][new_position.second];
     if (case_game != nullptr &&
         (case_game->getType() == Snake::CaseType::SNAKE_BODY ||
         case_game->getType() == Snake::CaseType::OBSTACLE)) {
@@ -142,7 +132,7 @@ bool Snake::Map::setPlayerPosition(Direction direction)
         return false;
     }
     _player->setPosition(new_position);
-    _map[new_position.first][new_position.second] = _player;
+    setMap(new_position.first, new_position.second, _player);
     if (eat_apple) {
         setApplePosition();
     }
@@ -171,6 +161,7 @@ void Snake::Map::placeObstacles()
 {
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = 0;
+    auto map = getMap();
 
     _obstacles.clear();
     if (free_slots.size() < _nbObstacles)
@@ -178,32 +169,33 @@ void Snake::Map::placeObstacles()
     for (int i = 0; i < _nbObstacles; i++) {
         index = rand() % free_slots.size();
         _obstacles.push_back(std::make_shared<Obstacle>());
-        _map[free_slots[index].first][free_slots[index].second] = _obstacles[i];
+        setMap(free_slots[index].first, free_slots[index].second, _obstacles[i]);
         _obstacles[i]->setPosition(free_slots[index]);
         free_slots.erase(free_slots.begin() + index);
     }
 }
 
-bool Snake::Map::checkMirror(std::pair<int, int> new_position)
+std::pair<int, int> Snake::Map::checkMirror(std::pair<int, int> new_position)
 {
-    Mode mode = getMode();
+    Mode mode = *getMode();
+    auto _size_map = getSizeMap();
 
     if (mode == Mode::NORMAL &&
         (new_position.first < 0 ||
-        new_position.first >= _size_map.first ||
+        new_position.first >= _size_map->first ||
         new_position.second < 0 ||
-        new_position.second >= _size_map.second)) {
+        new_position.second >= _size_map->second)) {
         _player->setAlive(false);
-        return false;
+        return new_position;
     } else if (mode == Mode::MIRROR) {
         if (new_position.first < 0)
-            new_position.first = _size_map.first - 1;
-        if (new_position.first >= _size_map.first)
+            new_position.first = _size_map->first - 1;
+        if (new_position.first >= _size_map->first)
             new_position.first = 0;
         if (new_position.second < 0)
-            new_position.second = _size_map.second - 1;
-        if (new_position.second >= _size_map.second)
+            new_position.second = _size_map->second - 1;
+        if (new_position.second >= _size_map->second)
             new_position.second = 0;
     }
-    return true;
+    return new_position;
 }

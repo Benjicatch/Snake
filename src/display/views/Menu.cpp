@@ -23,7 +23,7 @@ void Snake::Menu::display()
 
     _settings->displayAndCheckButton();
     canplay = _play->displayAndCheckButton();
-    if (canplay && (_map->getSizeMap().first < 5 || _map->getSizeMap().second < 5)) {
+    if (canplay && (_map->getSizeMap()->first < 5 || _map->getSizeMap()->second < 5)) {
         setStatus(Status::SETTINGS);
     }
 }

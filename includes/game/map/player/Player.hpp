@@ -10,6 +10,7 @@
 #include <vector>
 #include <deque>
 #include "ACase.hpp"
+#include "AGame.hpp"
 
 namespace Snake {
 
@@ -23,10 +24,9 @@ namespace Snake {
             std::pair<int, int> _old_position;
     };
 
-    class Player : public ACase
-    {
+    class Player : public ACase, public AGame {
         public:
-            Player(int x, int y);
+            Player(int x, int y, AGame &game);
             ~Player();
             void moveBody(Direction direction);
             void addBody(int x, int y);

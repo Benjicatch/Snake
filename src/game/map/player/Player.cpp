@@ -29,7 +29,7 @@ std::pair<int, int> Snake::Body::getOldPosition() const
     return _old_position;
 }
 
-Snake::Player::Player(int x, int y) : _isAlive(true), _initPosition({x, y})
+Snake::Player::Player(int x, int y, AGame &game) : _isAlive(true), _initPosition({x, y}), AGame(game)
 {
     _position = {x, y};
     _object = LoadTexture("assets/head.png");
@@ -59,6 +59,16 @@ void Snake::Player::moveBody(Direction direction)
         case Direction::RIGHT:
             _position.first += 1;
             break;
+    }
+    if (*getMode() == Mode::MIRROR) {
+        if (_position.first < 0)
+            _position.first = getSizeMap()->first - 1;
+        if (_position.first >= getSizeMap()->first)
+            _position.first = 0;
+        if (_position.second < 0)
+            _position.second = getSizeMap()->second - 1;
+        if (_position.second >= getSizeMap()->second)
+            _position.second = 0;
     }
     for (auto &body : _body) {
         std::pair<int, int> tmp2 = body->getPosition();

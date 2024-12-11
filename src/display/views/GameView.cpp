@@ -92,18 +92,18 @@ void Snake::GameView::getEvent()
 
 void Snake::GameView::displayMap()
 {
-    float square_width = _window_map.width / _map->getSizeMap().first;
-    float square_height = _window_map.height / _map->getSizeMap().second;
+    float square_width = _window_map.width / _map->getSizeMap()->first;
+    float square_height = _window_map.height / _map->getSizeMap()->second;
     auto map = _map->getMap();
 
-    for (int i = 0; i < _map->getSizeMap().first; i++) {
-        for (int j = 0; j < _map->getSizeMap().second; j++) {
+    for (int i = 0; i < _map->getSizeMap()->first; i++) {
+        for (int j = 0; j < _map->getSizeMap()->second; j++) {
             displayGrass({ _window_map.x + i * square_width,
                            _window_map.y + j * square_height,
                            square_width,
                            square_height });
             if (map[i][j] != nullptr) {
-                map[i][j]->display(_window_map, _map->getSizeMap());
+                map[i][j]->display(_window_map, *_map->getSizeMap());
             }
         }
     }
