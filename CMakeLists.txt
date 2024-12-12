@@ -2,36 +2,47 @@ cmake_minimum_required(VERSION 3.17.0)
 project(snake)
 set(CMAKE_CXX_STANDARD 20)
 
-# Adding Raylib
-include(FetchContent)
-set(FETCHCONTENT_QUIET FALSE)
-set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
-set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # don't build the supplied example games
+# Generate compile_commands.json
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-FetchContent_Declare(
+# Dependencies
+set(RAYLIB_VERSION 5.5)
+find_package(raylib ${RAYLIB_VERSION} QUIET) # QUIET or REQUIRED
+if (NOT raylib_FOUND) # If there's none, fetch and build raylib
+  include(FetchContent)
+  FetchContent_Declare(
     raylib
-    GIT_REPOSITORY "https://github.com/raysan5/raylib.git"
-    GIT_TAG "master"
-    GIT_PROGRESS TRUE
-)
+    DOWNLOAD_EXTRACT_TIMESTAMP OFF
+    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+  )
+  FetchContent_GetProperties(raylib)
+  if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
+    set(FETCHCONTENT_QUIET NO)
+    FetchContent_MakeAvailable(raylib)
+    set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+  endif()
+endif()
 
-FetchContent_MakeAvailable(raylib)
+add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} raylib)
 
-# Adding our source files
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp") # Define PROJECT_SOURCES as a list of all source files
-set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/") # Define PROJECT_INCLUDE to be the path to the include directory of the project
+# Checks if OSX and links appropriate frameworks (Only required on MacOS)
+if (APPLE)
+    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
+    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
+endif()
 
-add_executable(snake main.cpp)
 set_target_properties(snake PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/.)
 add_subdirectory(src)
 set(INCROOT
     ${CMAKE_SOURCE_DIR}/includes/
 )
 target_include_directories(snake PUBLIC ${INCROOT})
-target_link_libraries(${PROJECT_NAME} PRIVATE game)
-target_link_libraries(${PROJECT_NAME} PRIVATE map)
-target_link_libraries(${PROJECT_NAME} PRIVATE display)
-target_link_libraries(${PROJECT_NAME} PRIVATE objects)
-target_link_libraries(${PROJECT_NAME} PRIVATE player)
-target_link_libraries(${PROJECT_NAME} PRIVATE textures)
-target_link_libraries(${PROJECT_NAME} PRIVATE views)
+target_link_libraries(${PROJECT_NAME} game)
+target_link_libraries(${PROJECT_NAME} map)
+target_link_libraries(${PROJECT_NAME} display)
+target_link_libraries(${PROJECT_NAME} objects)
+target_link_libraries(${PROJECT_NAME} player)
+target_link_libraries(${PROJECT_NAME} textures)
+target_link_libraries(${PROJECT_NAME} views)
