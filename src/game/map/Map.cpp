@@ -88,7 +88,6 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     bool eat_apple = false;
     std::pair<int, int> player_position = _player->getPosition();
     auto &map = getMap();
-    std::cout << _apple->getPosition().first << " " << _apple->getPosition().second << std::endl;
 
     if (direction == Direction::NONE)
         direction = _last_direction;

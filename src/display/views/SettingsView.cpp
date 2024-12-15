@@ -10,8 +10,8 @@
 Snake::SettingsView::SettingsView(AViewDisplay &view) : AViewDisplay(view)
 {
     _back = std::make_unique<Back>(view);
-    _width = std::make_unique<InputBox>(view, 40, 50, "Width", 3);
-    _height = std::make_unique<InputBox>(view, 40, 60, "Height", 3);
+    _width = std::make_unique<InputBox>(view, 40, 50, "Width", 2);
+    _height = std::make_unique<InputBox>(view, 40, 60, "Height", 2);
     _obstacles = std::make_unique<InputBox>(view, 40,  70, "Obstacles", 2);
     _mirror = std::make_unique<InputBox>(view, 80, 60, "", 1);
     _mirror->setInputBoxStatus(InputBoxStatus::CLICKED);
@@ -98,12 +98,14 @@ bool Snake::SettingsView::checkWidthHeight()
         drawText("Width and Height must be filled", 50, 40, RED);
         return false;
     }
-    if (_width->getText().size() > 0 && std::stoi(_width->getText()) < 5) {
-        drawText("Width must be greater than 5", 50, 40, RED);
+    if (_width->getText().size() > 0 &&
+        (std::stoi(_width->getText()) < 5 || std::stoi(_width->getText()) > 20)) {
+        drawText("Width must be between 5 and 20 included", 50, 40, RED);
         return false;
     }
-    if (_height->getText().size() > 0 && std::stoi(_height->getText()) < 5) {
-        drawText("Height must be greater than 5", 50, 40, RED);
+    if (_height->getText().size() > 0 &&
+        (std::stoi(_height->getText()) < 5 || std::stoi(_height->getText()) > 20)) {
+        drawText("Height must be between 5 and 20 included", 50, 40, RED);
         return false;
     }
     return true;
