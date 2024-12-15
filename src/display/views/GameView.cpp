@@ -21,7 +21,9 @@ Snake::GameView::~GameView()
 
 void Snake::GameView::display()
 {
-    setWindowMap({ _window->first - (_window->first - 200), _window->second - (_window->second - 80), (_window->first - 400), (_window->second - 160) });
+    float size = std::min(_window->first - 200, _window->second - 80);
+
+    setWindowMap({ (_window->first - size) / 2, (_window->second - size) / 2, size, size });
     getEvent();
     if (_timer <= 0) {
         _timer = TIMER;

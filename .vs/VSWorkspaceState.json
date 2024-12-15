@@ -8,12 +8,8 @@
     ]
   },
   "ExpandedNodes": [
-    "",
-    "\\src\\display",
-    "\\src\\display\\textures",
-    "\\src\\game",
-    "\\src\\game\\map",
-    "\\src\\game\\map\\player"
+    ""
   ],
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }
