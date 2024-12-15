@@ -68,7 +68,7 @@ bool Snake::Map::setApplePosition()
     auto _size_map = getSizeMap();
 
     // Check if the player won
-    if (free_slots.size() <= _size_map->first * _size_map->second / 2) {
+    if (getScore() >= ((_size_map->first * _size_map->second) - getObstacles()) / 2) {
         setWin(true);
         return false;
     }
