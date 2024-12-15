@@ -7,7 +7,7 @@ set(SRC
     ${SRCROOT}/AGame.cpp
 )
 add_library(game STATIC ${SRC})
-target_link_libraries(game PRIVATE raylib)
+target_link_libraries(game PRIVATE raylib map)
 target_include_directories(game PUBLIC
     ${INCROOT}
 )

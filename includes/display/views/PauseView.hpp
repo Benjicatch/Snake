@@ -7,6 +7,7 @@
 
 #pragma once
 #include <iostream>
+#include <string>
 #include <memory>
 #include "Settings.hpp"
 #include "Play.hpp"

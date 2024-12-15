@@ -10,5 +10,3 @@ target_include_directories(player PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/game
 )
-target_link_libraries(player PRIVATE
-    map)

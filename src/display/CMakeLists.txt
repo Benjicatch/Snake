@@ -11,14 +11,9 @@ set(SRC
 add_subdirectory(textures)
 add_subdirectory(views)
 add_library(display STATIC ${SRC})
-target_link_libraries(display PRIVATE raylib)
+target_link_libraries(display PRIVATE raylib textures views)
 target_include_directories(display PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/game
     ${CMAKE_SOURCE_DIR}/includes/game/map
 )
-target_link_libraries(display PRIVATE
-    map
-    player
-    textures
-    views)

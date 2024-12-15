@@ -7,7 +7,7 @@ set(SRC
     ${SRCROOT}/Obstacle.cpp
 )
 add_library(objects STATIC ${SRC})
-target_link_libraries(objects PRIVATE raylib game)
+target_link_libraries(objects PRIVATE raylib)
 target_include_directories(objects PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/game

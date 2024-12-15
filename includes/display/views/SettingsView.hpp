@@ -8,6 +8,7 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <string>
 #include "Back.hpp"
 #include "InputBox.hpp"
 #include "raylib.h"

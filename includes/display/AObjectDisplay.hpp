@@ -6,6 +6,7 @@
 */
 
 #pragma once
+#define RAYLIB_API static
 #include "raylib.h"
 #include <iostream>
 #include "IViewDisplay.hpp"

@@ -23,6 +23,7 @@ void Snake::Map::restart()
     auto map = getMap();
 
     setSizeMap(size_map->first, size_map->second);
+    setWin(false);
     _player = std::make_shared<Player>(size_map->first / 2, size_map->second / 2, *this);
     _apple = std::make_shared<Apple>();
     setMap(_player->getPosition().first, _player->getPosition().second, _player);

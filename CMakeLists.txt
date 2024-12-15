@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.17.0)
 project(snake)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_BUILD_TYPE Debug)
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -24,7 +25,6 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
 endif()
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} raylib)
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
 if (APPLE)
@@ -38,11 +38,19 @@ add_subdirectory(src)
 set(INCROOT
     ${CMAKE_SOURCE_DIR}/includes/
 )
-target_include_directories(snake PUBLIC ${INCROOT})
-target_link_libraries(${PROJECT_NAME} game)
-target_link_libraries(${PROJECT_NAME} map)
-target_link_libraries(${PROJECT_NAME} display)
-target_link_libraries(${PROJECT_NAME} objects)
-target_link_libraries(${PROJECT_NAME} player)
-target_link_libraries(${PROJECT_NAME} textures)
-target_link_libraries(${PROJECT_NAME} views)
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCROOT})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    raylib
+    -Wl,--whole-archive
+    user32.lib
+    -Wl,--no-whole-archive
+    textures
+    views
+    objects
+    player
+    map
+    game
+    display
+)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:user32.lib")
+target_link_libraries(${PROJECT_NAME} PRIVATE user32.lib)

@@ -15,10 +15,8 @@ set(SRC
     ${SRCROOT}/WinningView.cpp
 )
 add_library(views STATIC ${SRC})
-target_link_libraries(views PRIVATE raylib map player)
+target_link_libraries(views PRIVATE raylib map textures)
 target_include_directories(views PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/game
 )
-target_link_libraries(views PRIVATE
-    textures)

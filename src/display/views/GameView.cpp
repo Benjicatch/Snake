@@ -44,10 +44,10 @@ void Snake::GameView::handleEvent()
     bool isRecursing = false;
 
     // check if direction are opposite
-    if (direction == Direction::UP && _directions.front() == Direction::DOWN ||
+    if (!_directions.empty() && (direction == Direction::UP && _directions.front() == Direction::DOWN ||
         direction == Direction::DOWN && _directions.front() == Direction::UP ||
         direction == Direction::LEFT && _directions.front() == Direction::RIGHT ||
-        direction == Direction::RIGHT && _directions.front() == Direction::LEFT) {
+        direction == Direction::RIGHT && _directions.front() == Direction::LEFT)) {
         _directions.pop_front();
         isRecursing = true;
         handleEvent();
