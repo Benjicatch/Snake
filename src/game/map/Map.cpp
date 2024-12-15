@@ -20,26 +20,27 @@ Snake::Map::~Map()
 void Snake::Map::restart()
 {
     auto size_map = getSizeMap();
-    auto map = getMap();
+    auto &map = getMap();
 
     setSizeMap(size_map->first, size_map->second);
-    setWin(false);
+    setScore(0);
     _player = std::make_shared<Player>(size_map->first / 2, size_map->second / 2, *this);
     _apple = std::make_shared<Apple>();
     setMap(_player->getPosition().first, _player->getPosition().second, _player);
-    for (auto body : _player->getBody()) {
+    for (auto &body : _player->getBody()) {
         setMap(body->getPosition().first, body->getPosition().second, body);
     }
     setApplePosition();
     placeObstacles();
     setScore(0);
     _last_direction = Direction::LEFT;
+    setWin(false);
 }
 
 std::vector<std::pair<int, int>> Snake::Map::getFreeSlots() const
 {
     std::vector<std::pair<int, int>> free_slots;
-    auto map = getMap();
+    auto &map = getMap();
 
     for (int i = 0; i < map.size(); i++) {
         for (int j = 0; j < map[i].size(); j++) {
@@ -65,16 +66,16 @@ bool Snake::Map::setApplePosition()
 {
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = 0;
-    auto map = getMap();
+    auto &map = getMap();
     auto _size_map = getSizeMap();
 
     // Check if the player won
+    setScore(getScore() + 1);
     if (getScore() >= ((_size_map->first * _size_map->second) - getObstacles()) / 2) {
         setWin(true);
         return false;
     }
     index = rand() % free_slots.size();
-    setScore(getScore() + 1);
     _apple->setPosition(free_slots[index]);
     setMap(free_slots[index].first, free_slots[index].second, _apple);
     return true;
@@ -86,7 +87,8 @@ bool Snake::Map::setPlayerPosition(Direction direction)
     std::shared_ptr<Snake::ICase> case_game;
     bool eat_apple = false;
     std::pair<int, int> player_position = _player->getPosition();
-    auto map = getMap();
+    auto &map = getMap();
+    std::cout << _apple->getPosition().first << " " << _apple->getPosition().second << std::endl;
 
     if (direction == Direction::NONE)
         direction = _last_direction;
@@ -162,7 +164,7 @@ void Snake::Map::placeObstacles()
 {
     std::vector<std::pair<int, int>> free_slots = this->getFreeSlots();
     int index = 0;
-    auto map = getMap();
+    auto &map = getMap();
 
     _obstacles.clear();
     if (free_slots.size() < _nbObstacles)
