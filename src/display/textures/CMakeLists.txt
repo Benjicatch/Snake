@@ -15,7 +15,11 @@ set(SRC
     ${SRCROOT}/InputBox.cpp
 )
 add_library(textures STATIC ${SRC})
-target_link_libraries(textures PRIVATE raylib map)
+if (WIN32)
+    target_link_libraries(textures PRIVATE raylib map)
+else()
+    target_link_libraries(textures PRIVATE raylib display map)
+endif()
 target_include_directories(textures PUBLIC
     ${INCROOT}
     ${CMAKE_SOURCE_DIR}/includes/game

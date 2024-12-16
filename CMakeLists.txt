@@ -38,18 +38,30 @@ set(INCROOT
     ${CMAKE_SOURCE_DIR}/includes/
 )
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCROOT})
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    raylib
-    -Wl,--whole-archive
-    user32.lib
-    -Wl,--no-whole-archive
-    textures
-    views
-    objects
-    player
-    map
-    game
-    display
-)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:user32.lib")
-target_link_libraries(${PROJECT_NAME} PRIVATE user32.lib)
+if (WIN32)
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+      raylib
+      -Wl,--whole-archive
+      user32.lib
+      -Wl,--no-whole-archive
+      game
+      display
+      textures
+      views
+      objects
+      player
+      map
+  )
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:user32.lib")
+else()
+  target_link_libraries(${PROJECT_NAME} PRIVATE
+      raylib
+      display
+      game
+      textures
+      views
+      objects
+      player
+      map
+  )
+endif()
